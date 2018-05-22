@@ -8,19 +8,20 @@
 
 import UIKit
 
-class GalleryTopicsTableViewController: UITableViewController {
+class GalleryTopicsViewController: UITableViewController {
     
     // MARK: - Model
     
     var topicsList = ["Food", "Sports", "People"]
     var recentlyDeletedList = [String]()
-
-    // MARK: - Table view data source
-
+    var currentTopic = ""
+    
     @IBAction func addTopic(_ sender: UIBarButtonItem) {
         topicsList += ["Untitled".madeUnique(withRespectTo: topicsList)]
         tableView.reloadData()
     }
+
+    // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -97,16 +98,10 @@ class GalleryTopicsTableViewController: UITableViewController {
         return true
     }
     */
+    
 
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
     
     override func viewDidLoad() {
        self.navigationController?.isToolbarHidden = false
