@@ -10,7 +10,7 @@ import UIKit
 
 private let reuseIdentifier = "imageCell"
 
-class ImageGalleryCollectionViewController: UICollectionViewController, UICollectionViewDragDelegate {
+class ImageGalleryCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
     // MARK: model below
     var topic = ""
@@ -32,43 +32,33 @@ class ImageGalleryCollectionViewController: UICollectionViewController, UICollec
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
         if let imageCell = cell as? ImageCollectionViewCell {
-            imageCell.collectionViewCellLoadingSpinner.startAnimating()
-            if let url = imageURLs[indexPath.item]?.imageURL {
-                DispatchQueue.global(qos: .userInitiated).async {
-                    let urlContents = try? Data(contentsOf: url)
-                    DispatchQueue.main.async { [weak self] in
-                        if let imageData = urlContents, url == self?.imageURLs[indexPath.item] {
-                            // need to adjust aspect ratio from the operations of the drag and drop
-                            imageCell.imageView?.image = UIImage(data: imageData)
-                            imageCell.collectionViewCellLoadingSpinner.stopAnimating()
-                        }
-                    }
-                }
-            }
+            let url = imageURLs[indexPath.item]?.imageURL
+            // need to adjust aspect ratio from the operations of the drag and drop
+            imageCell.imageURL = url
         }
         return cell
     }
     
     // MARK: - UICollectionViewDragDelegate
     
-    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        session.localContext = collectionView
-        return dragItems(at: indexPath)
-    }
-
-    func collectionView(_ collectionView: UICollectionView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
-        return dragItems(at: indexPath)
-    }
-
-    private func dragItems(at indexPath: IndexPath) -> [UIDragItem] {
-        if let image = (self.collectionView?.cellForItem(at: indexPath) as? ImageCollectionViewCell)?.imageView.image {
-            let dragItem = UIDragItem(itemProvider: NSItemProvider(object: image))
-            dragItem.localObject = image
-            return [dragItem]
-        } else {
-            return []
-        }
-    }
+//    func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+//        session.localContext = collectionView
+//        return dragItems(at: indexPath)
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] {
+//        return dragItems(at: indexPath)
+//    }
+//
+//    private func dragItems(at indexPath: IndexPath) -> [UIDragItem] {
+//        if let image = (self.collectionView?.cellForItem(at: indexPath) as? ImageCollectionViewCell)?.imageView.image {
+//            let dragItem = UIDragItem(itemProvider: NSItemProvider(object: image))
+//            dragItem.localObject = image
+//            return [dragItem]
+//        } else {
+//            return []
+//        }
+//    }
     
     // MARK: - UICollectionViewDropDelegate
     
