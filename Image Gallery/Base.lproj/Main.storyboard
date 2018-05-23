@@ -102,15 +102,21 @@
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rni-FK-3uF">
                                             <rect key="frame" x="0.0" y="0.0" width="200" height="100"/>
                                         </imageView>
+                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="0cY-bC-V99">
+                                            <rect key="frame" x="90" y="40" width="20" height="20"/>
+                                        </activityIndicatorView>
                                     </subviews>
                                 </view>
                                 <constraints>
+                                    <constraint firstItem="0cY-bC-V99" firstAttribute="centerY" secondItem="0mu-O6-Dua" secondAttribute="centerY" id="0CF-3O-2Ev"/>
+                                    <constraint firstItem="0cY-bC-V99" firstAttribute="centerX" secondItem="0mu-O6-Dua" secondAttribute="centerX" id="6Qr-LY-wbD"/>
                                     <constraint firstItem="Rni-FK-3uF" firstAttribute="top" secondItem="0mu-O6-Dua" secondAttribute="top" id="E7i-fS-wcl"/>
                                     <constraint firstAttribute="bottom" secondItem="Rni-FK-3uF" secondAttribute="bottom" id="bd3-jV-cO7"/>
                                     <constraint firstAttribute="trailing" secondItem="Rni-FK-3uF" secondAttribute="trailing" id="tEk-q1-N1G"/>
                                     <constraint firstItem="Rni-FK-3uF" firstAttribute="leading" secondItem="0mu-O6-Dua" secondAttribute="leading" id="v6x-sJ-5bC"/>
                                 </constraints>
                                 <connections>
+                                    <outlet property="collectionViewCellLoadingSpinner" destination="0cY-bC-V99" id="aCg-jc-nz3"/>
                                     <outlet property="imageView" destination="Rni-FK-3uF" id="c7O-aA-xEr"/>
                                 </connections>
                             </collectionViewCell>
