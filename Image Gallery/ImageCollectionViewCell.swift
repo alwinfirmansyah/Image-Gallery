@@ -14,7 +14,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var collectionViewCellLoadingSpinner: UIActivityIndicatorView!
     
-    var imageURL: URL? {
+    var galleryImageURL: URL? {
         didSet {
             image = nil
             fetchImage()
@@ -27,23 +27,25 @@ class ImageCollectionViewCell: UICollectionViewCell {
         }
         set {
             imageView.image = newValue
-            imageView.sizeToFit()
+//            imageView.sizeToFit()
             collectionViewCellLoadingSpinner?.stopAnimating()
         }
     }
     
     private func fetchImage() {
-        if let url = imageURL {
+        if let url = galleryImageURL {
             collectionViewCellLoadingSpinner.startAnimating()
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 let urlContents = try? Data(contentsOf: url)
                 DispatchQueue.main.async {
-                    if let imageData = urlContents, url == self?.imageURL {
+                    if let imageData = urlContents, url == self?.galleryImageURL {
                         self?.image = UIImage(data: imageData)
                     }
                 }
             }
         }
     }
+    
+    
     
 }

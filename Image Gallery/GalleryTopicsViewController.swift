@@ -14,7 +14,7 @@ class GalleryTopicsViewController: UITableViewController {
     
     var topicsList = ["Food", "Sports", "People"]
     var recentlyDeletedList = [String]()
-    var imageGalleries = [String : ImageGalleryCollectionViewController]()
+    var imageGalleries = [String : UICollectionView]()
     
     @IBAction func addTopic(_ sender: UIBarButtonItem) {
         topicsList += ["Untitled".madeUnique(withRespectTo: topicsList)]
