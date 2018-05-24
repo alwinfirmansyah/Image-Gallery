@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="bg3-Jr-7HW">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7FK-6J-H6B">
     <device id="ipad10_5" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
@@ -42,6 +42,9 @@
                     </toolbarItems>
                     <navigationItem key="navigationItem" id="nee-pm-k5X"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <segue destination="ml1-VY-taB" kind="showDetail" identifier="Show Gallery" id="93U-KZ-C6O"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6vI-pg-bXI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -53,6 +56,7 @@
                 <splitViewController id="7FK-6J-H6B" sceneMemberID="viewController">
                     <connections>
                         <segue destination="ePE-6i-UbZ" kind="relationship" relationship="masterViewController" id="6BW-63-efo"/>
+                        <segue destination="ml1-VY-taB" kind="relationship" relationship="detailViewController" id="oFU-GL-sDn"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kjF-8M-MOi" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -82,11 +86,11 @@
             <objects>
                 <viewController id="bg3-Jr-7HW" customClass="ImageGalleryViewController" customModule="Image_Gallery" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ryU-eZ-HFh">
-                        <rect key="frame" x="0.0" y="0.0" width="1112" height="834"/>
+                        <rect key="frame" x="0.0" y="0.0" width="791.5" height="834"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="eo7-yp-rSa">
-                                <rect key="frame" x="0.0" y="20" width="1112" height="814"/>
+                                <rect key="frame" x="0.0" y="64" width="791.5" height="770"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="mlm-JQ-Q7I">
                                     <size key="itemSize" width="300" height="300"/>
@@ -125,7 +129,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DropPlaceholderCell" id="gi7-Fh-PM9">
-                                        <rect key="frame" x="406" y="0.0" width="300" height="300"/>
+                                        <rect key="frame" x="486.5" y="0.0" width="300" height="300"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
@@ -154,13 +158,35 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="dE9-Pn-P0W"/>
                     </view>
+                    <navigationItem key="navigationItem" id="anZ-aZ-G9Y"/>
                     <connections>
                         <outlet property="galleryCollectionView" destination="eo7-yp-rSa" id="tMP-qH-mYQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="74M-zX-AwD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="709" y="562"/>
+            <point key="canvasLocation" x="2361" y="562"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="bdN-x8-O0B">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ml1-VY-taB" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="H8h-I0-TGc">
+                        <rect key="frame" x="0.0" y="20" width="791.5" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="bg3-Jr-7HW" kind="relationship" relationship="rootViewController" id="STp-6g-yAp"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ivs-NO-yTi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="708.99280575539569" y="561.87050359712237"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="93U-KZ-C6O"/>
+    </inferredMetricsTieBreakers>
 </document>

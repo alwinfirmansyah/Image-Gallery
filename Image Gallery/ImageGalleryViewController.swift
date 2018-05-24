@@ -12,7 +12,7 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+//        self.navigationController?.title = topic
         // Do any additional setup after loading the view.
     }
 
@@ -26,11 +26,17 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
     }
     
     // MARK: model below
-    var topic = ""
-//    var imageURLs = [URL(string: "https://upload.wikimedia.org/wikipedia/commons/5/55/Stanford_Oval_September_2013_panorama.jpg"),URL(string: "https://www.jpl.nasa.gov/images/cassini/20090202/pia03883-full.jpg"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReIoYqxU5APOY1fPGRuzLX7x47TsnyakYQXp6dLnNytz3k-2te"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKzBggXsaBjPSlrLnBjDGg6Go6PxUkMph5P2wsjuruPhBA3qBd")]
+    var topic: String? {
+        didSet {
+//            self.navigationController?.title = topic
+        }
+    }
+    var imageURLs = [URL(string: "https://upload.wikimedia.org/wikipedia/commons/5/55/Stanford_Oval_September_2013_panorama.jpg"),URL(string: "https://www.jpl.nasa.gov/images/cassini/20090202/pia03883-full.jpg"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReIoYqxU5APOY1fPGRuzLX7x47TsnyakYQXp6dLnNytz3k-2te"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKzBggXsaBjPSlrLnBjDGg6Go6PxUkMph5P2wsjuruPhBA3qBd")]
+    var imageAspectRatios: [CGFloat] = [1.0, 1.0, 1.0, 1.0]
     
-    var imageURLs = [URL]()
-    var imageAspectRatios = [CGFloat]()
+//    var imageURLs = [URL]()
+//    var imageAspectRatios = [CGFloat]()
+    
     
     // MARK: - UICollectionViewDataSource
     private let reuseIdentifier = "imageCell"
@@ -115,8 +121,8 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
             for item in coordinator.items {
                 if let sourceIndexPath = item.sourceIndexPath {
                     
-                    imageAspectRatios.insert(tempAspectRatios.first!, at: destinationIndexPath.item)
-                    tempAspectRatios.removeFirst()
+                    imageAspectRatios.insert(tempAspectRatios.last!, at: destinationIndexPath.item)
+                    tempAspectRatios.removeLast()
                     
                     if let url = item.dragItem.localObject as? NSURL {
                         collectionView.performBatchUpdates({
@@ -130,7 +136,7 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
                 } else {
                     item.dragItem.itemProvider.loadObject(ofClass: UIImage.self) { (provider, error) in
                         if let imageAspectRatio = (provider as? UIImage)?.aspectRatio {
-                            DispatchQueue.main.async {
+                        DispatchQueue.main.async {
                                 self.imageAspectRatios.insert(imageAspectRatio, at: destinationIndexPath.item)
                             }
                         }

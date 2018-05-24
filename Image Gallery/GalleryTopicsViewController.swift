@@ -11,10 +11,10 @@ import UIKit
 class GalleryTopicsViewController: UITableViewController {
     
     // MARK: - Model
-    
-    var topicsList = ["Food", "Sports", "People"]
-    var recentlyDeletedList = [String]()
-    var imageGalleries = [String : UICollectionView]()
+    var imageGalleries = [String : ImageGalleryViewController]()
+
+    private var topicsList = [String]()
+    private var recentlyDeletedList = [String]()
     
     @IBAction func addTopic(_ sender: UIBarButtonItem) {
         topicsList += ["Untitled".madeUnique(withRespectTo: topicsList)]
@@ -62,7 +62,28 @@ class GalleryTopicsViewController: UITableViewController {
         return true
     }
     */
-
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        currentlySelectedTopic = topicsList[indexPath.row]
+        
+        if let imageGalleryVC = imageGalleries[currentlySelectedTopic!] {
+            imageGalleryVC.navigationItem.title = currentlySelectedTopic
+            navigationController?.pushViewController(imageGalleryVC, animated: true)
+        } else {
+            performSegue(withIdentifier: "Show Gallery", sender: self)
+        }
+        
+//        if let imageGalleryVC = imageGalleries[currentlySelectedTopic!] {
+//            self.splitViewController?.viewControllers[1] = imageGalleryVC
+//            imageGalleryVC.navigationItem.title = currentlySelectedTopic
+////        } else if let imageGalleryVC = imageGalleries[currentlySelectedTopic!] {
+////            imageGalleryVC.navigationItem.title = currentlySelectedTopic
+////            navigationController?.pushViewController(imageGalleryVC, animated: true)
+//        } else {
+//            performSegue(withIdentifier: "Show Gallery", sender: self)
+//        }
+    }
+    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
@@ -111,6 +132,17 @@ class GalleryTopicsViewController: UITableViewController {
         super.viewWillLayoutSubviews()
         if splitViewController?.preferredDisplayMode != .primaryOverlay {
             splitViewController?.preferredDisplayMode = .primaryOverlay
+        }
+    }
+    
+    private var currentlySelectedTopic: String?
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "Show Gallery" {
+            if let destination = segue.destination.childViewControllers.last as? ImageGalleryViewController {
+                destination.navigationItem.title = currentlySelectedTopic
+                imageGalleries[currentlySelectedTopic!] = destination
+            }
         }
     }
 
