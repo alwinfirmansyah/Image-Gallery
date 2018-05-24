@@ -56,6 +56,9 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return horizontalCellSpacing
+    }
     
     // MARK: - UICollectionViewDragDelegate
     
@@ -97,7 +100,7 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
      // MARK: - UICollectionViewDropDelegate
     
         func collectionView(_ collectionView: UICollectionView, canHandle session: UIDropSession) -> Bool {
-            return session.canLoadObjects(ofClass: NSURL.self) 
+            return session.canLoadObjects(ofClass: NSURL.self)
         }
     
         func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
@@ -168,7 +171,11 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
 
 extension ImageGalleryViewController {
     private var cellWidth: CGFloat {
-        return CGFloat(galleryCollectionView.bounds.width / 4)
+        return CGFloat(galleryCollectionView.bounds.width / 3.1)
+    }
+    
+    private var horizontalCellSpacing: CGFloat {
+        return CGFloat(galleryCollectionView.bounds.width / 100)
     }
 }
 
