@@ -68,20 +68,11 @@ class GalleryTopicsViewController: UITableViewController {
         
         if let imageGalleryVC = imageGalleries[currentlySelectedTopic!] {
             imageGalleryVC.navigationItem.title = currentlySelectedTopic
-            navigationController?.pushViewController(imageGalleryVC, animated: true)
+            splitViewController?.showDetailViewController(imageGalleryVC, sender: self)
+//            navigationController?.pushViewController(imageGalleryVC, animated: true)
         } else {
             performSegue(withIdentifier: "Show Gallery", sender: self)
         }
-        
-//        if let imageGalleryVC = imageGalleries[currentlySelectedTopic!] {
-//            self.splitViewController?.viewControllers[1] = imageGalleryVC
-//            imageGalleryVC.navigationItem.title = currentlySelectedTopic
-////        } else if let imageGalleryVC = imageGalleries[currentlySelectedTopic!] {
-////            imageGalleryVC.navigationItem.title = currentlySelectedTopic
-////            navigationController?.pushViewController(imageGalleryVC, animated: true)
-//        } else {
-//            performSegue(withIdentifier: "Show Gallery", sender: self)
-//        }
     }
     
     // Override to support editing the table view.
@@ -137,9 +128,10 @@ class GalleryTopicsViewController: UITableViewController {
     
     private var currentlySelectedTopic: String?
     
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Show Gallery" {
-            if let destination = segue.destination.childViewControllers.last as? ImageGalleryViewController {
+            if let destination = segue.destination as? ImageGalleryViewController {
                 destination.navigationItem.title = currentlySelectedTopic
                 imageGalleries[currentlySelectedTopic!] = destination
             }

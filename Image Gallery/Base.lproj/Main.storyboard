@@ -33,17 +33,17 @@
                             <outlet property="delegate" destination="lWj-Fw-kde" id="xIW-6b-jlJ"/>
                         </connections>
                     </tableView>
-                    <toolbarItems>
-                        <barButtonItem systemItem="add" id="2Mu-ZP-Tig">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="nee-pm-k5X">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="2Mu-ZP-Tig">
                             <connections>
                                 <action selector="addTopic:" destination="lWj-Fw-kde" id="1jh-3M-Fvg"/>
                             </connections>
                         </barButtonItem>
-                    </toolbarItems>
-                    <navigationItem key="navigationItem" id="nee-pm-k5X"/>
+                    </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <segue destination="ml1-VY-taB" kind="showDetail" identifier="Show Gallery" id="93U-KZ-C6O"/>
+                        <segue destination="bg3-Jr-7HW" kind="showDetail" identifier="Show Gallery" id="TlS-vc-nt9"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6vI-pg-bXI" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -56,7 +56,7 @@
                 <splitViewController id="7FK-6J-H6B" sceneMemberID="viewController">
                     <connections>
                         <segue destination="ePE-6i-UbZ" kind="relationship" relationship="masterViewController" id="6BW-63-efo"/>
-                        <segue destination="ml1-VY-taB" kind="relationship" relationship="detailViewController" id="oFU-GL-sDn"/>
+                        <segue destination="bg3-Jr-7HW" kind="relationship" relationship="detailViewController" id="j8G-28-ipz"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kjF-8M-MOi" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -90,7 +90,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="eo7-yp-rSa">
-                                <rect key="frame" x="0.0" y="64" width="791.5" height="770"/>
+                                <rect key="frame" x="0.0" y="20" width="791.5" height="814"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="mlm-JQ-Q7I">
                                     <size key="itemSize" width="300" height="300"/>
@@ -165,28 +165,10 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="74M-zX-AwD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2361" y="562"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="bdN-x8-O0B">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ml1-VY-taB" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="H8h-I0-TGc">
-                        <rect key="frame" x="0.0" y="20" width="791.5" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="bg3-Jr-7HW" kind="relationship" relationship="rootViewController" id="STp-6g-yAp"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ivs-NO-yTi" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="708.99280575539569" y="561.87050359712237"/>
+            <point key="canvasLocation" x="709" y="778"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="93U-KZ-C6O"/>
+        <segue reference="TlS-vc-nt9"/>
     </inferredMetricsTieBreakers>
 </document>
