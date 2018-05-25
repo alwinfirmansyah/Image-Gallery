@@ -31,10 +31,10 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
 //            self.navigationController?.title = topic
         }
     }
-    var imageURLs = [URL(string: "https://images.pexels.com/photos/274131/pexels-photo-274131.jpeg?auto=compress&cs=tinysrgb&h=350"),URL(string: "https://newevolutiondesigns.com/images/freebies/cool-wallpaper-2.jpg"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReIoYqxU5APOY1fPGRuzLX7x47TsnyakYQXp6dLnNytz3k-2te"), URL(string: "https://www.jpl.nasa.gov/images/cassini/20090202/pia03883-full.jpg"), URL(string: "https://images.pexels.com/photos/709881/pexels-photo-709881.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"), URL(string: "https://images.pexels.com/photos/943907/pexels-photo-943907.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_AqlonO-xlbRezcqaOzjqFVlOZ3ih6v_yFmSb8GyOTJUVY5rd"), URL(string: "https://www.nasa.gov/sites/default/files/wave_earth_mosaic_3.jpg"), URL(string: "https://hdwallsource.com/img/2014/9/high-resolution-backgrounds-4696-4789-hd-wallpapers.jpg"), URL(string: "https://images.pexels.com/photos/274131/pexels-photo-274131.jpeg?auto=compress&cs=tinysrgb&h=350"),URL(string: "https://newevolutiondesigns.com/images/freebies/cool-wallpaper-2.jpg"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReIoYqxU5APOY1fPGRuzLX7x47TsnyakYQXp6dLnNytz3k-2te"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKzBggXsaBjPSlrLnBjDGg6Go6PxUkMph5P2wsjuruPhBA3qBd"), URL(string: "https://www.nasa.gov/sites/default/files/saturn_collage.jpg"), URL(string: "https://images.pexels.com/photos/943907/pexels-photo-943907.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_AqlonO-xlbRezcqaOzjqFVlOZ3ih6v_yFmSb8GyOTJUVY5rd"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN5KbyS6CV_W_vLK8Ana9M6ev3CZUiGTMjEYnFO6eRxVTKGjqBFA"), URL(string: "https://hdwallsource.com/img/2014/9/high-resolution-backgrounds-4696-4789-hd-wallpapers.jpg")]
+    var imageURLs: [URL?] = [URL(string: "https://images.pexels.com/photos/274131/pexels-photo-274131.jpeg?auto=compress&cs=tinysrgb&h=350"),URL(string: "https://newevolutiondesigns.com/images/freebies/cool-wallpaper-2.jpg"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReIoYqxU5APOY1fPGRuzLX7x47TsnyakYQXp6dLnNytz3k-2te"), URL(string: "https://www.jpl.nasa.gov/images/cassini/20090202/pia03883-full.jpg"), URL(string: "https://images.pexels.com/photos/709881/pexels-photo-709881.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"), URL(string: "https://images.pexels.com/photos/943907/pexels-photo-943907.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_AqlonO-xlbRezcqaOzjqFVlOZ3ih6v_yFmSb8GyOTJUVY5rd"), URL(string: "https://www.nasa.gov/sites/default/files/wave_earth_mosaic_3.jpg"), URL(string: "https://hdwallsource.com/img/2014/9/high-resolution-backgrounds-4696-4789-hd-wallpapers.jpg"), URL(string: "https://images.pexels.com/photos/274131/pexels-photo-274131.jpeg?auto=compress&cs=tinysrgb&h=350"),URL(string: "https://newevolutiondesigns.com/images/freebies/cool-wallpaper-2.jpg"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReIoYqxU5APOY1fPGRuzLX7x47TsnyakYQXp6dLnNytz3k-2te"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKzBggXsaBjPSlrLnBjDGg6Go6PxUkMph5P2wsjuruPhBA3qBd"), URL(string: "https://www.nasa.gov/sites/default/files/saturn_collage.jpg"), URL(string: "https://images.pexels.com/photos/943907/pexels-photo-943907.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_AqlonO-xlbRezcqaOzjqFVlOZ3ih6v_yFmSb8GyOTJUVY5rd"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN5KbyS6CV_W_vLK8Ana9M6ev3CZUiGTMjEYnFO6eRxVTKGjqBFA"), URL(string: "https://hdwallsource.com/img/2014/9/high-resolution-backgrounds-4696-4789-hd-wallpapers.jpg")]
     var imageAspectRatios: [CGFloat] = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,]
     
-//    var imageURLs = [URL]()
+//    var imageURLs = [URL?]()
 //    var imageAspectRatios = [CGFloat]()
     
     
@@ -47,10 +47,10 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-        if let imageCell = cell as? ImageCollectionViewCell {
-            let url = imageURLs[indexPath.item]
+        if let imageCell = cell as? ImageCollectionViewCell, let url = imageURLs[indexPath.item]?.imageURL {
             imageCell.galleryImageURL = url
         }
+        
         return cell
     }
     
@@ -64,6 +64,11 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return horizontalCellSpacing
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedImageURL = imageURLs[indexPath.item]
+        performSegue(withIdentifier: "Expand Image", sender: self)
     }
     
     // MARK: - UICollectionViewDragDelegate
@@ -167,15 +172,17 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
         }
     
 
-    /*
     // MARK: - Navigation
+    
+    private var selectedImageURL: URL?
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "Expand Image" {
+            if let destination = segue.destination as? SingleImageViewController {
+                destination.imageURL = selectedImageURL
+            }
+        }
     }
-    */
 
 }
 

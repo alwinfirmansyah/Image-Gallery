@@ -50,6 +50,41 @@
             </objects>
             <point key="canvasLocation" x="2361" y="-414"/>
         </scene>
+        <!--Single Image View Controller-->
+        <scene sceneID="Ied-cF-20w">
+            <objects>
+                <viewController id="CF5-Mf-Tbk" customClass="SingleImageViewController" customModule="Image_Gallery" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="eDb-h2-joL">
+                        <rect key="frame" x="0.0" y="0.0" width="791.5" height="834"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JMe-pO-rAY">
+                                <rect key="frame" x="0.0" y="20" width="791.5" height="814"/>
+                            </scrollView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="XFi-c9-0B1">
+                                <rect key="frame" x="386" y="407" width="20" height="20"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="JMe-pO-rAY" firstAttribute="top" secondItem="SIG-Kr-gxg" secondAttribute="top" id="ESP-sW-ove"/>
+                            <constraint firstItem="XFi-c9-0B1" firstAttribute="centerY" secondItem="eDb-h2-joL" secondAttribute="centerY" id="Jxm-tw-d2R"/>
+                            <constraint firstItem="XFi-c9-0B1" firstAttribute="centerX" secondItem="eDb-h2-joL" secondAttribute="centerX" id="TOX-qa-gun"/>
+                            <constraint firstItem="SIG-Kr-gxg" firstAttribute="trailing" secondItem="JMe-pO-rAY" secondAttribute="trailing" id="eM6-qY-h8b"/>
+                            <constraint firstItem="JMe-pO-rAY" firstAttribute="leading" secondItem="SIG-Kr-gxg" secondAttribute="leading" id="kk3-Yw-1BT"/>
+                            <constraint firstItem="SIG-Kr-gxg" firstAttribute="bottom" secondItem="JMe-pO-rAY" secondAttribute="bottom" id="vNJ-F8-H29"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="SIG-Kr-gxg"/>
+                    </view>
+                    <connections>
+                        <outlet property="imageLoadingSpinner" destination="XFi-c9-0B1" id="xKH-K8-qMS"/>
+                        <outlet property="imageScrollView" destination="JMe-pO-rAY" id="qk0-bJ-kFZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TeX-33-zET" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2361" y="778"/>
+        </scene>
         <!--Split View Controller-->
         <scene sceneID="wdA-nr-cQ7">
             <objects>
@@ -161,6 +196,7 @@
                     <navigationItem key="navigationItem" id="anZ-aZ-G9Y"/>
                     <connections>
                         <outlet property="galleryCollectionView" destination="eo7-yp-rSa" id="tMP-qH-mYQ"/>
+                        <segue destination="CF5-Mf-Tbk" kind="show" identifier="Expand Image" id="ga5-hC-7Yq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="74M-zX-AwD" userLabel="First Responder" sceneMemberID="firstResponder"/>

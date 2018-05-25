@@ -115,9 +115,9 @@ class GalleryTopicsViewController: UITableViewController {
     // MARK: - Navigation
 
     
-    override func viewDidLoad() {
-       self.navigationController?.isToolbarHidden = false
-    }
+//    override func viewDidLoad() {
+//       self.navigationController?.isToolbarHidden = false
+//    }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -127,7 +127,6 @@ class GalleryTopicsViewController: UITableViewController {
     }
     
     private var currentlySelectedTopic: String?
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Show Gallery" {

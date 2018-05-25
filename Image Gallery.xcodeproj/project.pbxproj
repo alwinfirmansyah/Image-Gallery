@@ -15,6 +15,7 @@
 		1C37B41420B37D4A00D0B80C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1C37B41220B37D4A00D0B80C /* LaunchScreen.storyboard */; };
 		1C37B42120B37F8D00D0B80C /* GalleryTopicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C37B42020B37F8D00D0B80C /* GalleryTopicsViewController.swift */; };
 		1C41943720B3920500659166 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C41943620B3920500659166 /* Utilities.swift */; };
+		1CF70D0A20B8C7A100CCFF82 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF70D0920B8C7A000CCFF82 /* SingleImageViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		1C37B41520B37D4A00D0B80C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1C37B42020B37F8D00D0B80C /* GalleryTopicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryTopicsViewController.swift; sourceTree = "<group>"; };
 		1C41943620B3920500659166 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		1CF70D0920B8C7A000CCFF82 /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +66,7 @@
 				1C2C14E920B5EE3F009A859D /* ImageGalleryViewController.swift */,
 				1C2ADE0720B4B1C200E297B5 /* ImageCollectionViewCell.swift */,
 				1C37B40D20B37D4600D0B80C /* Main.storyboard */,
+				1CF70D0920B8C7A000CCFF82 /* SingleImageViewController.swift */,
 				1C37B41B20B37D6200D0B80C /* Supporting Files */,
 				1C37B41520B37D4A00D0B80C /* Info.plist */,
 			);
@@ -156,6 +159,7 @@
 				1C2ADE0820B4B1C200E297B5 /* ImageCollectionViewCell.swift in Sources */,
 				1C2C14EA20B5EE3F009A859D /* ImageGalleryViewController.swift in Sources */,
 				1C41943720B3920500659166 /* Utilities.swift in Sources */,
+				1CF70D0A20B8C7A100CCFF82 /* SingleImageViewController.swift in Sources */,
 				1C37B42120B37F8D00D0B80C /* GalleryTopicsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
