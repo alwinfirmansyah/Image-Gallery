@@ -13,7 +13,7 @@ class GalleryTopicsViewController: UITableViewController {
     // MARK: - Model
     var imageGalleries = [String : ImageGalleryViewController]()
 
-    private var topicsList = [String]()
+    private var topicsList: [String] = ["Food", "Sports", "People"]
     private var recentlyDeletedList = [String]()
     
     @IBAction func addTopic(_ sender: UIBarButtonItem) {
@@ -22,6 +22,10 @@ class GalleryTopicsViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
+    
+    override func viewDidLoad() {
+        self.title = "Topics"
+    }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -37,7 +41,7 @@ class GalleryTopicsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
-            return "Topics"
+            return "Image Galleries"
         } else {
             return "Recently Deleted"
         }
@@ -45,35 +49,86 @@ class GalleryTopicsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Topic", for: indexPath)
-            cell.textLabel?.text = topicsList[indexPath.row]
-            return cell
+            if editableCell == nil {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "Topic", for: indexPath)
+                cell.textLabel?.text = topicsList[indexPath.row]
+                
+                // single tap gesture for navigating to image gallery
+                let singleTap = UITapGestureRecognizer(target: self, action: #selector(goToImageGallery(_:)))
+                singleTap.numberOfTapsRequired = 1
+                cell.addGestureRecognizer(singleTap)
+                
+                // double tap gesture for editing text
+                let doubleTap = UITapGestureRecognizer(target: self, action: #selector(editCellText(_:)))
+                doubleTap.numberOfTapsRequired = 2
+                cell.addGestureRecognizer(doubleTap)
+                
+                singleTap.require(toFail: doubleTap)
+                
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "Text Field", for: indexPath)
+                if let inputCell = cell as? TextFieldTableViewCell {
+                    inputCell.resignationHandler = { [weak self, unowned inputCell] in
+                        if let text = inputCell.textField.text {
+                            self?.topicsList[indexPath.row] = text
+                        }
+                        self?.editableCell = nil
+                        self?.tableView.reloadRows(at: [indexPath], with: .none)
+                    }
+                }
+                
+                return cell
+            }
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "Topic", for: indexPath)
             cell.textLabel?.text = recentlyDeletedList[indexPath.row]
             return cell
         }
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        currentlySelectedTopic = topicsList[indexPath.row]
-        
-        if let imageGalleryVC = imageGalleries[currentlySelectedTopic!] {
-            imageGalleryVC.navigationItem.title = currentlySelectedTopic
-            splitViewController?.showDetailViewController(imageGalleryVC, sender: self)
-//            navigationController?.pushViewController(imageGalleryVC, animated: true)
-        } else {
-            performSegue(withIdentifier: "Show Gallery", sender: self)
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if let inputCell = cell as? TextFieldTableViewCell {
+            inputCell.textField.becomeFirstResponder()
         }
     }
+    
+    private var editableCell: UITableViewCell?
+    
+    @objc private func editCellText(_ recognizer: UITapGestureRecognizer) {
+        if let tappedCell = recognizer.view as? UITableViewCell {
+            if let cellIndexPath = tableView.indexPath(for: tappedCell) {
+                editableCell = tappedCell
+                tableView.reloadRows(at: [cellIndexPath], with: .none)
+            }
+        }
+    }
+    
+    @objc private func goToImageGallery(_ recognizer: UITapGestureRecognizer) {
+        if let tappedCell = recognizer.view as? UITableViewCell {
+            if let cellIndexPath = tableView.indexPath(for: tappedCell) {
+                currentlySelectedTopic = topicsList[cellIndexPath.row]
+    
+                if let imageGalleryVC = imageGalleries[currentlySelectedTopic!] {
+                    imageGalleryVC.navigationItem.title = currentlySelectedTopic
+                    splitViewController?.showDetailViewController(imageGalleryVC, sender: self)
+                } else {
+                    performSegue(withIdentifier: "Show Gallery", sender: self)
+                }
+            }
+        }
+    }
+    
+//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        currentlySelectedTopic = topicsList[indexPath.row]
+//
+//        if let imageGalleryVC = imageGalleries[currentlySelectedTopic!] {
+//            imageGalleryVC.navigationItem.title = currentlySelectedTopic
+//            splitViewController?.showDetailViewController(imageGalleryVC, sender: self)
+//        } else {
+//            performSegue(withIdentifier: "Show Gallery", sender: self)
+//        }
+//    }
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {

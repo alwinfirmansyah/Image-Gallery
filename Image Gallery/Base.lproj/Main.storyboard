@@ -27,6 +27,31 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Text Field" id="cr5-ir-zHk" customClass="TextFieldTableViewCell" customModule="Image_Gallery" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="72" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="cr5-ir-zHk" id="zbq-ri-9hL">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="myk-ee-LCq">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                            <nil key="textColor"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="myk-ee-LCq" secondAttribute="bottom" id="TSX-Pi-8h1"/>
+                                        <constraint firstAttribute="trailing" secondItem="myk-ee-LCq" secondAttribute="trailing" id="oa3-Hm-RJN"/>
+                                        <constraint firstItem="myk-ee-LCq" firstAttribute="leading" secondItem="zbq-ri-9hL" secondAttribute="leading" id="vZx-QI-27U"/>
+                                        <constraint firstItem="myk-ee-LCq" firstAttribute="top" secondItem="zbq-ri-9hL" secondAttribute="top" id="z0a-Bg-sQq"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="textField" destination="myk-ee-LCq" id="Q1t-Jw-guz"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="lWj-Fw-kde" id="Wal-uN-VYc"/>

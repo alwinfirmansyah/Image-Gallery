@@ -48,7 +48,8 @@ class ImageCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        self.imageView.image = nil
+        self.imageView = nil
+        self.image = nil
     }
     
 }

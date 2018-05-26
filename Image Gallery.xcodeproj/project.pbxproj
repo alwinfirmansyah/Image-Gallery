@@ -16,6 +16,7 @@
 		1C37B42120B37F8D00D0B80C /* GalleryTopicsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C37B42020B37F8D00D0B80C /* GalleryTopicsViewController.swift */; };
 		1C41943720B3920500659166 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C41943620B3920500659166 /* Utilities.swift */; };
 		1CF70D0A20B8C7A100CCFF82 /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF70D0920B8C7A000CCFF82 /* SingleImageViewController.swift */; };
+		1CF70D0C20B8E35A00CCFF82 /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF70D0B20B8E35A00CCFF82 /* TextFieldTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		1C37B42020B37F8D00D0B80C /* GalleryTopicsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryTopicsViewController.swift; sourceTree = "<group>"; };
 		1C41943620B3920500659166 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		1CF70D0920B8C7A000CCFF82 /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
+		1CF70D0B20B8E35A00CCFF82 /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				1C37B42020B37F8D00D0B80C /* GalleryTopicsViewController.swift */,
+				1CF70D0B20B8E35A00CCFF82 /* TextFieldTableViewCell.swift */,
 				1C2C14E920B5EE3F009A859D /* ImageGalleryViewController.swift */,
 				1C2ADE0720B4B1C200E297B5 /* ImageCollectionViewCell.swift */,
 				1C37B40D20B37D4600D0B80C /* Main.storyboard */,
@@ -157,6 +160,7 @@
 			files = (
 				1C37B40A20B37D4600D0B80C /* AppDelegate.swift in Sources */,
 				1C2ADE0820B4B1C200E297B5 /* ImageCollectionViewCell.swift in Sources */,
+				1CF70D0C20B8E35A00CCFF82 /* TextFieldTableViewCell.swift in Sources */,
 				1C2C14EA20B5EE3F009A859D /* ImageGalleryViewController.swift in Sources */,
 				1C41943720B3920500659166 /* Utilities.swift in Sources */,
 				1CF70D0A20B8C7A100CCFF82 /* SingleImageViewController.swift in Sources */,
