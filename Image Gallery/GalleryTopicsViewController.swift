@@ -20,12 +20,12 @@ class GalleryTopicsViewController: UITableViewController {
         topicsList += ["Untitled".madeUnique(withRespectTo: topicsList)]
         tableView.reloadData()
     }
-
-    // MARK: - Table view data source
     
     override func viewDidLoad() {
         self.title = "Topics"
     }
+    
+    // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -97,7 +97,7 @@ class GalleryTopicsViewController: UITableViewController {
     
     @objc private func editCellText(_ recognizer: UITapGestureRecognizer) {
         if let tappedCell = recognizer.view as? UITableViewCell {
-            if let cellIndexPath = tableView.indexPath(for: tappedCell) {
+            if let cellIndexPath = tableView.indexPath(for: tappedCell), cellIndexPath.section == 0  {
                 editableCell = tappedCell
                 tableView.reloadRows(at: [cellIndexPath], with: .none)
             }
@@ -106,7 +106,7 @@ class GalleryTopicsViewController: UITableViewController {
     
     @objc private func goToImageGallery(_ recognizer: UITapGestureRecognizer) {
         if let tappedCell = recognizer.view as? UITableViewCell {
-            if let cellIndexPath = tableView.indexPath(for: tappedCell) {
+            if let cellIndexPath = tableView.indexPath(for: tappedCell), cellIndexPath.section == 0 {
                 currentlySelectedTopic = topicsList[cellIndexPath.row]
     
                 if let imageGalleryVC = imageGalleries[currentlySelectedTopic!] {
@@ -138,6 +138,8 @@ class GalleryTopicsViewController: UITableViewController {
                 addTopicToRecentlyDeleted(for: topicsList[indexPath.row])
                 topicsList.remove(at: indexPath.row)
             } else {
+                let removedTopic = recentlyDeletedList[indexPath.row]
+                imageGalleries[removedTopic] = nil
                 recentlyDeletedList.remove(at: indexPath.row)
             }
             tableView.deleteRows(at: [indexPath], with: .fade)
