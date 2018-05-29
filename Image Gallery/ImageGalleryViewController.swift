@@ -10,10 +10,6 @@ import UIKit
 
 class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDragDelegate, UICollectionViewDropDelegate {
 
-    override func viewDidDisappear(_ animated: Bool) {
-        // need to cancel all requests
-    }
-
     @IBOutlet weak var galleryCollectionView: UICollectionView! {
         didSet {
             galleryCollectionView.dataSource = self
@@ -23,14 +19,12 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
         }
     }
     
-    // MARK: model below
-    var topic: String? {
-        didSet {
-//            self.navigationController?.title = topic
-        }
-    }
-    var imageURLs: [URL?] = [URL(string: "https://images.pexels.com/photos/274131/pexels-photo-274131.jpeg?auto=compress&cs=tinysrgb&h=350"),URL(string: "https://newevolutiondesigns.com/images/freebies/cool-wallpaper-2.jpg"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReIoYqxU5APOY1fPGRuzLX7x47TsnyakYQXp6dLnNytz3k-2te"), URL(string: "https://www.jpl.nasa.gov/images/cassini/20090202/pia03883-full.jpg"), URL(string: "https://images.pexels.com/photos/709881/pexels-photo-709881.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"), URL(string: "https://images.pexels.com/photos/943907/pexels-photo-943907.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_AqlonO-xlbRezcqaOzjqFVlOZ3ih6v_yFmSb8GyOTJUVY5rd"), URL(string: "https://www.nasa.gov/sites/default/files/wave_earth_mosaic_3.jpg"), URL(string: "https://hdwallsource.com/img/2014/9/high-resolution-backgrounds-4696-4789-hd-wallpapers.jpg"), URL(string: "https://images.pexels.com/photos/274131/pexels-photo-274131.jpeg?auto=compress&cs=tinysrgb&h=350"),URL(string: "https://newevolutiondesigns.com/images/freebies/cool-wallpaper-2.jpg"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReIoYqxU5APOY1fPGRuzLX7x47TsnyakYQXp6dLnNytz3k-2te"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKzBggXsaBjPSlrLnBjDGg6Go6PxUkMph5P2wsjuruPhBA3qBd"), URL(string: "https://www.nasa.gov/sites/default/files/saturn_collage.jpg"), URL(string: "https://images.pexels.com/photos/943907/pexels-photo-943907.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_AqlonO-xlbRezcqaOzjqFVlOZ3ih6v_yFmSb8GyOTJUVY5rd"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN5KbyS6CV_W_vLK8Ana9M6ev3CZUiGTMjEYnFO6eRxVTKGjqBFA"), URL(string: "https://hdwallsource.com/img/2014/9/high-resolution-backgrounds-4696-4789-hd-wallpapers.jpg")]
-    var imageAspectRatios: [CGFloat] = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,]
+    // -------------------------------------------------------------------------------
+    // MARK: - Collection View Model
+    // -------------------------------------------------------------------------------
+    
+//    var imageURLs: [URL?] = [URL(string: "https://images.pexels.com/photos/274131/pexels-photo-274131.jpeg?auto=compress&cs=tinysrgb&h=350"),URL(string: "https://newevolutiondesigns.com/images/freebies/cool-wallpaper-2.jpg"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReIoYqxU5APOY1fPGRuzLX7x47TsnyakYQXp6dLnNytz3k-2te"), URL(string: "https://www.jpl.nasa.gov/images/cassini/20090202/pia03883-full.jpg"), URL(string: "https://images.pexels.com/photos/709881/pexels-photo-709881.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"), URL(string: "https://images.pexels.com/photos/943907/pexels-photo-943907.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_AqlonO-xlbRezcqaOzjqFVlOZ3ih6v_yFmSb8GyOTJUVY5rd"), URL(string: "https://www.nasa.gov/sites/default/files/wave_earth_mosaic_3.jpg"), URL(string: "https://hdwallsource.com/img/2014/9/high-resolution-backgrounds-4696-4789-hd-wallpapers.jpg"), URL(string: "https://images.pexels.com/photos/274131/pexels-photo-274131.jpeg?auto=compress&cs=tinysrgb&h=350"),URL(string: "https://newevolutiondesigns.com/images/freebies/cool-wallpaper-2.jpg"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReIoYqxU5APOY1fPGRuzLX7x47TsnyakYQXp6dLnNytz3k-2te"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKzBggXsaBjPSlrLnBjDGg6Go6PxUkMph5P2wsjuruPhBA3qBd"), URL(string: "https://www.nasa.gov/sites/default/files/saturn_collage.jpg"), URL(string: "https://images.pexels.com/photos/943907/pexels-photo-943907.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_AqlonO-xlbRezcqaOzjqFVlOZ3ih6v_yFmSb8GyOTJUVY5rd"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN5KbyS6CV_W_vLK8Ana9M6ev3CZUiGTMjEYnFO6eRxVTKGjqBFA"), URL(string: "https://hdwallsource.com/img/2014/9/high-resolution-backgrounds-4696-4789-hd-wallpapers.jpg")]
+//    var imageAspectRatios: [CGFloat] = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,]
     
 //    var imageURLs: [URL?] = [URL(string: "https://images.pexels.com/photos/274131/pexels-photo-274131.jpeg?auto=compress&cs=tinysrgb&h=350"),URL(string: "https://newevolutiondesigns.com/images/freebies/cool-wallpaper-2.jpg"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReIoYqxU5APOY1fPGRuzLX7x47TsnyakYQXp6dLnNytz3k-2te"), URL(string: "https://images.pexels.com/photos/943907/pexels-photo-943907.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_AqlonO-xlbRezcqaOzjqFVlOZ3ih6v_yFmSb8GyOTJUVY5rd"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN5KbyS6CV_W_vLK8Ana9M6ev3CZUiGTMjEYnFO6eRxVTKGjqBFA"), URL(string: "https://hdwallsource.com/img/2014/9/high-resolution-backgrounds-4696-4789-hd-wallpapers.jpg")]
 //    var imageAspectRatios: [CGFloat] = [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0,]
@@ -39,52 +33,46 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
 //    var imageAspectRatios: [CGFloat] = [1.0, 1.0]
     
 //
-//    var imageURLs = [URL?]()
-//    var imageAspectRatios = [CGFloat]()
+    var imageURLs = [URL?]()
+    var imageAspectRatios = [CGFloat]()
 
     
-    // MARK: - UICollectionViewDataSource
-    private let reuseIdentifier = "imageCell"
+    // -------------------------------------------------------------------------------
+    // MARK: - Collection View Data Source
+    // -------------------------------------------------------------------------------
+    
+    private let imageCell = "imageCell"
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return imageURLs.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageCell, for: indexPath)
         if let imageCell = cell as? ImageCollectionViewCell, let url = imageURLs[indexPath.item]?.imageURL {
             imageCell.galleryImageURL = url
         }
-        
         return cell
     }
     
+    // -------------------------------------------------------------------------------
+    // MARK: - Collection View Design and Layout
+    // -------------------------------------------------------------------------------
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView.cellForItem(at: indexPath)?.reuseIdentifier == reuseIdentifier {
-            return CGSize(width: cellWidth, height: cellWidth / imageAspectRatios[indexPath.item] )
-        } else {
-            return CGSize(width: cellWidth, height: cellWidth)
-        }
+        return CGSize(width: cellWidth, height: cellWidth / imageAspectRatios[indexPath.item] )
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return horizontalCellSpacing
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        selectedImageURL = imageURLs[indexPath.item]
-        performSegue(withIdentifier: "Expand Image", sender: self)
-    }
-    
-    // MARK: - UICollectionViewDragDelegate
+    // -------------------------------------------------------------------------------
+    // MARK: - Collection View Drag Delegate
+    // -------------------------------------------------------------------------------
     
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         session.localContext = collectionView
-        
-        if let aspectRatio = aspectRatio(at: indexPath) {
-            tempAspectRatios.append(aspectRatio)
-        }
-        
         return dragItems(at: indexPath)
     }
     
@@ -103,17 +91,9 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
         }
     }
     
-    private var tempAspectRatios = [CGFloat]()
-    
-    private func aspectRatio(at indexPath: IndexPath) -> CGFloat? {
-        if let ratio = (galleryCollectionView.cellForItem(at: indexPath) as? ImageCollectionViewCell)?.imageView.image?.aspectRatio {
-            return ratio
-        } else {
-            return nil
-        }
-    }
-    
-     // MARK: - UICollectionViewDropDelegate
+    // -------------------------------------------------------------------------------
+    // MARK: - Collection View Drop Delegate
+    // -------------------------------------------------------------------------------
     
         func collectionView(_ collectionView: UICollectionView, canHandle session: UIDropSession) -> Bool {
             if session.localDragSession != nil {
@@ -132,40 +112,33 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
             performDropWith coordinator: UICollectionViewDropCoordinator
             ) {
             let destinationIndexPath = coordinator.destinationIndexPath ?? IndexPath(item: 0, section: 0)
-            for item in coordinator.items {
-                if let sourceIndexPath = item.sourceIndexPath {
-                    
-                    imageAspectRatios.insert(tempAspectRatios.last!, at: destinationIndexPath.item)
-                    tempAspectRatios.removeLast()
-                    
-                    if let url = item.dragItem.localObject as? NSURL {
-                        collectionView.performBatchUpdates({
-                            imageURLs.remove(at: sourceIndexPath.item)
-                            imageURLs.insert((url as URL), at: destinationIndexPath.item)
-                            collectionView.deleteItems(at: [sourceIndexPath])
-                            collectionView.insertItems(at: [destinationIndexPath])
-                        })
-                        coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
-                    }
+            for dropItem in coordinator.items {
+                if let sourceIndexPath = dropItem.sourceIndexPath {
+                    collectionView.performBatchUpdates({
+                        imageAspectRatios.move(from: sourceIndexPath.item, to: destinationIndexPath.item)
+                        imageURLs.move(from: sourceIndexPath.item, to: destinationIndexPath.item)
+                        collectionView.moveItem(at: sourceIndexPath, to: destinationIndexPath)
+                    })
+                    coordinator.drop(dropItem.dragItem, toItemAt: destinationIndexPath)
                 } else {
-                    item.dragItem.itemProvider.loadObject(ofClass: UIImage.self) { (provider, error) in
-                        if let imageAspectRatio = (provider as? UIImage)?.aspectRatio {
-                        DispatchQueue.main.async {
-                                self.imageAspectRatios.insert(imageAspectRatio, at: destinationIndexPath.item)
-                            }
-                        }
-                    }
-
                     let placeholderContext = coordinator.drop(
-                        item.dragItem,
+                        dropItem.dragItem,
                         to: UICollectionViewDropPlaceholder(insertionIndexPath: destinationIndexPath, reuseIdentifier: "DropPlaceholderCell")
                     )
                     
-                    item.dragItem.itemProvider.loadObject(ofClass: NSURL.self) { (provider, error) in
-                        DispatchQueue.main.async {
+                    dropItem.dragItem.itemProvider.loadObject(ofClass: UIImage.self) { (provider, error) in
+                        if let imageAspectRatio = (provider as? UIImage)?.aspectRatio {
+                            DispatchQueue.main.async { [weak self] in
+                                self?.imageAspectRatios.insert(imageAspectRatio, at: destinationIndexPath.item)
+                            }
+                        }
+                    }
+                    
+                    dropItem.dragItem.itemProvider.loadObject(ofClass: NSURL.self) { (provider, error) in
+                        DispatchQueue.main.async { [weak self] in
                             if let url = provider as? NSURL {
                                 placeholderContext.commitInsertion(dataSourceUpdates: { insertionIndexPath in
-                                    self.imageURLs.insert((url as URL).imageURL, at: insertionIndexPath.item)
+                                    self?.imageURLs.insert((url as URL).imageURL, at: insertionIndexPath.item)
                                 })
                             } else {
                                 placeholderContext.deletePlaceholder()
@@ -177,7 +150,14 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
         }
     
 
+    // -------------------------------------------------------------------------------
     // MARK: - Navigation
+    // -------------------------------------------------------------------------------
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedImageURL = imageURLs[indexPath.item]
+        performSegue(withIdentifier: "Expand Image", sender: self)
+    }
     
     private var selectedImageURL: URL?
 
@@ -198,6 +178,14 @@ extension ImageGalleryViewController {
     
     private var horizontalCellSpacing: CGFloat {
         return CGFloat(galleryCollectionView.bounds.width / 100)
+    }
+}
+
+extension Array {
+    mutating func move(from oldIndex: Index, to newIndex: Index) {
+        if oldIndex == newIndex { return }
+        if abs(newIndex - oldIndex) == 1 { return self.swapAt(oldIndex, newIndex) }
+        self.insert(self.remove(at: oldIndex), at: newIndex)
     }
 }
 

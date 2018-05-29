@@ -11,7 +11,7 @@ import UIKit
 class GalleryTopicsViewController: UITableViewController {
     
     // -------------------------------------------------------------------------------
-    // MARK: - Model
+    // MARK: - Tableview Model
     // -------------------------------------------------------------------------------
     
     var topicsList: [String] = ["Food", "Sports", "People"]
