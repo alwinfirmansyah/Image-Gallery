@@ -136,6 +136,8 @@ class GalleryTopicsViewController: UITableViewController {
     }
     
     private func undeleteRow(forRowAtIndexPath indexPath: IndexPath) -> UIContextualAction {
+        let indexPathOfLastRow = IndexPath(row: tableView.numberOfRows(inSection: 0), section: 0)
+        
         let undeleteAction = UIContextualAction(style: .normal, title: "Undelete") {
             (contextAction: UIContextualAction, sourceView: UIView, completionHandler: (Bool) -> Void) in
             if indexPath.section == 1 {
@@ -144,7 +146,8 @@ class GalleryTopicsViewController: UITableViewController {
                     print("test")
                     self.topicsList.append(self.recentlyDeletedList[indexPath.row])
                     self.recentlyDeletedList.remove(at: indexPath.row)
-                    self.tableView.reloadData()
+                    self.tableView.deleteRows(at: [indexPath], with: .none)
+                    self.tableView.insertRows(at: [indexPathOfLastRow], with: .none)
                 })
                 completionHandler(true)
             } else {
