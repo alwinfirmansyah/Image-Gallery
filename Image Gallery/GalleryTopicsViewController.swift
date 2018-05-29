@@ -21,9 +21,9 @@ class GalleryTopicsViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    override func viewDidLoad() {
-        self.title = "Topics"
-    }
+//    override func viewDidLoad() {
+//        self.title = "Topics"
+//    }
     
     // MARK: - Table view data source
     
@@ -48,58 +48,49 @@ class GalleryTopicsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            if editableCell == nil {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "Topic", for: indexPath)
-                cell.textLabel?.text = topicsList[indexPath.row]
-                
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Text Field", for: indexPath)
+        
+        if let inputCell = cell as? TextFieldTableViewCell {
+            inputCell.textField.isEnabled = false
+            
+            if indexPath.section == 0 {
+                inputCell.textField.text = topicsList[indexPath.row]
+    
                 // single tap gesture for navigating to image gallery
                 let singleTap = UITapGestureRecognizer(target: self, action: #selector(goToImageGallery(_:)))
                 singleTap.numberOfTapsRequired = 1
-                cell.addGestureRecognizer(singleTap)
+                inputCell.addGestureRecognizer(singleTap)
                 
                 // double tap gesture for editing text
                 let doubleTap = UITapGestureRecognizer(target: self, action: #selector(editCellText(_:)))
                 doubleTap.numberOfTapsRequired = 2
-                cell.addGestureRecognizer(doubleTap)
+                inputCell.addGestureRecognizer(doubleTap)
                 
                 singleTap.require(toFail: doubleTap)
                 
-                return cell
+                return inputCell
             } else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: "Text Field", for: indexPath)
-                if let inputCell = cell as? TextFieldTableViewCell {
-                    inputCell.resignationHandler = { [weak self, unowned inputCell] in
-                        if let text = inputCell.textField.text {
-                            self?.topicsList[indexPath.row] = text
-                        }
-                        self?.editableCell = nil
-                        self?.tableView.reloadRows(at: [indexPath], with: .none)
-                    }
-                }
-                
-                return cell
+                inputCell.textField.text = recentlyDeletedList[indexPath.row]
+                return inputCell
             }
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "Topic", for: indexPath)
-            cell.textLabel?.text = recentlyDeletedList[indexPath.row]
             return cell
         }
     }
     
-    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let inputCell = cell as? TextFieldTableViewCell {
-            inputCell.textField.becomeFirstResponder()
-        }
-    }
-    
-    private var editableCell: UITableViewCell?
-    
     @objc private func editCellText(_ recognizer: UITapGestureRecognizer) {
-        if let tappedCell = recognizer.view as? UITableViewCell {
+        if let tappedCell = recognizer.view as? TextFieldTableViewCell {
             if let cellIndexPath = tableView.indexPath(for: tappedCell), cellIndexPath.section == 0  {
-                editableCell = tappedCell
-                tableView.reloadRows(at: [cellIndexPath], with: .none)
+                tappedCell.textField.isEnabled = true
+                tappedCell.textField.becomeFirstResponder()
+                
+                tappedCell.resignationHandler = { [weak self, unowned tappedCell] in
+                    if let text = tappedCell.textField.text {
+                        self?.topicsList[cellIndexPath.row] = text
+                        self?.tableView.reloadRows(at: [cellIndexPath], with: .none)
+                    }
+                }
+                
             }
         }
     }
@@ -118,17 +109,6 @@ class GalleryTopicsViewController: UITableViewController {
             }
         }
     }
-    
-//    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        currentlySelectedTopic = topicsList[indexPath.row]
-//
-//        if let imageGalleryVC = imageGalleries[currentlySelectedTopic!] {
-//            imageGalleryVC.navigationItem.title = currentlySelectedTopic
-//            splitViewController?.showDetailViewController(imageGalleryVC, sender: self)
-//        } else {
-//            performSegue(withIdentifier: "Show Gallery", sender: self)
-//        }
-//    }
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -171,10 +151,6 @@ class GalleryTopicsViewController: UITableViewController {
 
     // MARK: - Navigation
 
-    
-//    override func viewDidLoad() {
-//       self.navigationController?.isToolbarHidden = false
-//    }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
