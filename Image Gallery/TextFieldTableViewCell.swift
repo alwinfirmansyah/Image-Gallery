@@ -9,10 +9,12 @@
 import UIKit
 
 class TextFieldTableViewCell: UITableViewCell, UITextFieldDelegate {
-
+    
     @IBOutlet weak var textField: UITextField! {
         didSet {
             textField.delegate = self
+            textField.placeholder = "Enter Text Here"
+            textField.font = UIFontMetrics(forTextStyle: .body).scaledFont(for: UIFont.preferredFont(forTextStyle: .body).withSize(18.0))
         }
     }
     

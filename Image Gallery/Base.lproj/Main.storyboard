@@ -26,18 +26,18 @@
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="myk-ee-LCq">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="myk-ee-LCq">
+                                            <rect key="frame" x="20" y="20" width="280" height="3.5"/>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits"/>
                                         </textField>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="bottom" secondItem="myk-ee-LCq" secondAttribute="bottom" id="TSX-Pi-8h1"/>
-                                        <constraint firstAttribute="trailing" secondItem="myk-ee-LCq" secondAttribute="trailing" id="oa3-Hm-RJN"/>
-                                        <constraint firstItem="myk-ee-LCq" firstAttribute="leading" secondItem="zbq-ri-9hL" secondAttribute="leading" id="vZx-QI-27U"/>
-                                        <constraint firstItem="myk-ee-LCq" firstAttribute="top" secondItem="zbq-ri-9hL" secondAttribute="top" id="z0a-Bg-sQq"/>
+                                        <constraint firstAttribute="bottom" secondItem="myk-ee-LCq" secondAttribute="bottom" constant="20" symbolic="YES" id="TSX-Pi-8h1"/>
+                                        <constraint firstAttribute="trailing" secondItem="myk-ee-LCq" secondAttribute="trailing" constant="20" symbolic="YES" id="oa3-Hm-RJN"/>
+                                        <constraint firstItem="myk-ee-LCq" firstAttribute="leading" secondItem="zbq-ri-9hL" secondAttribute="leading" constant="20" symbolic="YES" id="vZx-QI-27U"/>
+                                        <constraint firstItem="myk-ee-LCq" firstAttribute="top" secondItem="zbq-ri-9hL" secondAttribute="top" constant="20" symbolic="YES" id="z0a-Bg-sQq"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
