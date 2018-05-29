@@ -128,6 +128,32 @@ class GalleryTopicsViewController: UITableViewController {
         }
     }
     
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let undelete = self.undeleteRow(forRowAtIndexPath: indexPath)
+        
+        let swipeConfig = UISwipeActionsConfiguration(actions: [undelete])
+        return swipeConfig
+    }
+    
+    private func undeleteRow(forRowAtIndexPath indexPath: IndexPath) -> UIContextualAction {
+        let undeleteAction = UIContextualAction(style: .normal, title: "Undelete") {
+            (contextAction: UIContextualAction, sourceView: UIView, completionHandler: (Bool) -> Void) in
+            if indexPath.section == 1 {
+                print("this works")
+                self.tableView.performBatchUpdates({
+                    print("test")
+                    self.topicsList.append(self.recentlyDeletedList[indexPath.row])
+                    self.recentlyDeletedList.remove(at: indexPath.row)
+                    self.tableView.reloadData()
+                })
+                completionHandler(true)
+            } else {
+                completionHandler(false)
+            }
+        }
+        return undeleteAction
+    }
+    
     private func addTopicToRecentlyDeleted(for topic: String) {
         recentlyDeletedList.append(topic)
         tableView.reloadData()
