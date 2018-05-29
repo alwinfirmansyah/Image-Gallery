@@ -129,10 +129,13 @@ class GalleryTopicsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let undelete = self.undeleteRow(forRowAtIndexPath: indexPath)
-        
-        let swipeConfig = UISwipeActionsConfiguration(actions: [undelete])
-        return swipeConfig
+        if indexPath.section == 1 {
+            let undelete = self.undeleteRow(forRowAtIndexPath: indexPath)
+            let swipeConfig = UISwipeActionsConfiguration(actions: [undelete])
+            return swipeConfig
+        } else {
+            return nil
+        }
     }
     
     private func undeleteRow(forRowAtIndexPath indexPath: IndexPath) -> UIContextualAction {
@@ -140,19 +143,14 @@ class GalleryTopicsViewController: UITableViewController {
         
         let undeleteAction = UIContextualAction(style: .normal, title: "Undelete") {
             (contextAction: UIContextualAction, sourceView: UIView, completionHandler: (Bool) -> Void) in
-            if indexPath.section == 1 {
-                print("this works")
-                self.tableView.performBatchUpdates({
-                    print("test")
-                    self.topicsList.append(self.recentlyDeletedList[indexPath.row])
-                    self.recentlyDeletedList.remove(at: indexPath.row)
-                    self.tableView.deleteRows(at: [indexPath], with: .none)
-                    self.tableView.insertRows(at: [indexPathOfLastRow], with: .none)
-                })
-                completionHandler(true)
-            } else {
-                completionHandler(false)
-            }
+            self.tableView.performBatchUpdates({
+                print("test")
+                self.topicsList.append(self.recentlyDeletedList[indexPath.row])
+                self.recentlyDeletedList.remove(at: indexPath.row)
+                self.tableView.deleteRows(at: [indexPath], with: .none)
+                self.tableView.insertRows(at: [indexPathOfLastRow], with: .none)
+            })
+            completionHandler(true)
         }
         return undeleteAction
     }
