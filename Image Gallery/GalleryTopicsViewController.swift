@@ -75,17 +75,27 @@ class GalleryTopicsViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        let indexPathOfLastRow = IndexPath(row: tableView.numberOfRows(inSection: 1), section: 1)
+
         if editingStyle == .delete {
             // Delete the row from the data source
             if indexPath.section == 0 {
-                addTopicToRecentlyDeleted(for: topicsList[indexPath.row])
-                topicsList.remove(at: indexPath.row)
+                tableView.performBatchUpdates({
+                    recentlyDeletedList.append(topicsList[indexPath.row])
+                    topicsList.remove(at: indexPath.row)
+                    
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    tableView.insertRows(at: [indexPathOfLastRow], with: .fade)
+                })
             } else {
-                let removedTopic = recentlyDeletedList[indexPath.row]
-                imageGalleries[removedTopic] = nil
-                recentlyDeletedList.remove(at: indexPath.row)
+                tableView.performBatchUpdates({
+                    let removedTopic = recentlyDeletedList[indexPath.row]
+                    imageGalleries[removedTopic] = nil
+                    recentlyDeletedList.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    tableView.reloadData()
+                })
             }
-            tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
@@ -130,7 +140,7 @@ class GalleryTopicsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         if indexPath.section == 1 {
-            let undelete = self.undeleteRow(forRowAtIndexPath: indexPath)
+            let undelete = undeleteRow(forRowAtIndexPath: indexPath)
             let swipeConfig = UISwipeActionsConfiguration(actions: [undelete])
             return swipeConfig
         } else {
@@ -142,22 +152,16 @@ class GalleryTopicsViewController: UITableViewController {
         let indexPathOfLastRow = IndexPath(row: tableView.numberOfRows(inSection: 0), section: 0)
         
         let undeleteAction = UIContextualAction(style: .normal, title: "Undelete") {
-            (contextAction: UIContextualAction, sourceView: UIView, completionHandler: (Bool) -> Void) in
-            self.tableView.performBatchUpdates({
-                print("test")
-                self.topicsList.append(self.recentlyDeletedList[indexPath.row])
-                self.recentlyDeletedList.remove(at: indexPath.row)
-                self.tableView.deleteRows(at: [indexPath], with: .none)
-                self.tableView.insertRows(at: [indexPathOfLastRow], with: .none)
+            [weak self] (contextAction: UIContextualAction, sourceView: UIView, completionHandler: (Bool) -> Void) in
+            self?.tableView.performBatchUpdates({
+                self?.topicsList.append(self!.recentlyDeletedList[indexPath.row])
+                self?.recentlyDeletedList.remove(at: indexPath.row)
+                self?.tableView.deleteRows(at: [indexPath], with: .fade)
+                self?.tableView.insertRows(at: [indexPathOfLastRow], with: .fade)
             })
             completionHandler(true)
         }
         return undeleteAction
-    }
-    
-    private func addTopicToRecentlyDeleted(for topic: String) {
-        recentlyDeletedList.append(topic)
-        tableView.reloadData()
     }
     
     // -------------------------------------------------------------------------------
