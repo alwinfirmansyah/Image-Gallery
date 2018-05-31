@@ -10,34 +10,17 @@ import UIKit
 
 class GalleryTopicsViewController: UITableViewController {
     
-    override func viewDidAppear(_ animated: Bool) {
-        topicsList = GroupOfImageGalleries.topics
-        listOfImageGalleries = GroupOfImageGalleries.arrayOfImageGalleries
-//        tableView.reloadData()
-    }
-    
-    // -------------------------------------------------------------------------------
-    // MARK: - Tableview Model
-    // -------------------------------------------------------------------------------
-    
-//    var imageGalleries = GroupOfImageGalleries()
-    var topicsList = GroupOfImageGalleries.topics
-    var listOfImageGalleries = GroupOfImageGalleries.arrayOfImageGalleries
-    
-//    lazy var listOfImageGalleries: [ImageGalleryModel] = [ImageGalleryModel(topic: topicsList[0], identifier: 1), ImageGalleryModel(topic: topicsList[1], identifier: 2), ImageGalleryModel(topic: topicsList[2], identifier: 3)]
-    
     // -------------------------------------------------------------------------------
     // MARK: - Tableview Data Related
     // -------------------------------------------------------------------------------
     
-//    private var topicsList: [String] = ["Food", "Sports", "People"]
     private var recentlyDeletedList = [String]()
     private var recentlyRemovedImageGalleries = [ImageGalleryModel]()
     
     @IBAction func addTopic(_ sender: UIBarButtonItem) {
-        let newTopic = "Untitled".madeUnique(withRespectTo: topicsList)
-        topicsList += [newTopic]
-        listOfImageGalleries += [ImageGalleryModel(topic: newTopic, identifier: topicsList.count)]
+        let newTopic = "Untitled".madeUnique(withRespectTo: GroupOfImageGalleries.topics)
+        GroupOfImageGalleries.topics += [newTopic]
+        GroupOfImageGalleries.arrayOfImageGalleries += [ImageGalleryModel(topic: newTopic, identifier: GroupOfImageGalleries.topics.count)]
         tableView.reloadData()
     }
     
@@ -47,7 +30,7 @@ class GalleryTopicsViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return topicsList.count
+            return GroupOfImageGalleries.topics.count
         } else {
             return recentlyDeletedList.count
         }
@@ -61,7 +44,7 @@ class GalleryTopicsViewController: UITableViewController {
             inputCell.textField.isEnabled = false
             
             if indexPath.section == 0 {
-                let text = NSAttributedString(string: topicsList[indexPath.row], attributes: [.font : font])
+                let text = NSAttributedString(string: GroupOfImageGalleries.topics[indexPath.row], attributes: [.font : font])
                 inputCell.textField.attributedText = text
     
                 // single tap gesture for navigating to image gallery
@@ -96,11 +79,11 @@ class GalleryTopicsViewController: UITableViewController {
             // Delete the row from the data source
             if indexPath.section == 0 {
                 tableView.performBatchUpdates({
-                    recentlyDeletedList.append(topicsList[indexPath.row])
-                    recentlyRemovedImageGalleries.append(listOfImageGalleries[indexPath.row])
+                    recentlyDeletedList.append(GroupOfImageGalleries.topics[indexPath.row])
+                    recentlyRemovedImageGalleries.append(GroupOfImageGalleries.arrayOfImageGalleries[indexPath.row])
                     
-                    topicsList.remove(at: indexPath.row)
-                    listOfImageGalleries.remove(at: indexPath.row)
+                    GroupOfImageGalleries.topics.remove(at: indexPath.row)
+                    GroupOfImageGalleries.arrayOfImageGalleries.remove(at: indexPath.row)
                     
                     tableView.deleteRows(at: [indexPath], with: .fade)
                     tableView.insertRows(at: [indexPathOfLastRow], with: .fade)
@@ -131,8 +114,8 @@ class GalleryTopicsViewController: UITableViewController {
                 
                 tappedCell.resignationHandler = { [weak self, unowned tappedCell] in
                     if let text = tappedCell.textField.text {
-                        self?.topicsList[cellIndexPath.row] = text
-                        self?.listOfImageGalleries[cellIndexPath.row].topic = text
+                        GroupOfImageGalleries.topics[cellIndexPath.row] = text
+                        GroupOfImageGalleries.arrayOfImageGalleries[cellIndexPath.row].topic = text
                         self?.tableView.reloadData()
                     }
                 }
@@ -143,8 +126,8 @@ class GalleryTopicsViewController: UITableViewController {
     @objc private func goToImageGallery(_ recognizer: UITapGestureRecognizer) {
         if let tappedCell = recognizer.view as? UITableViewCell {
             if let cellIndexPath = tableView.indexPath(for: tappedCell), cellIndexPath.section == 0 {
-                currentlySelectedTopic = topicsList[cellIndexPath.row]
-                currentlySelectedImageGallery = listOfImageGalleries[cellIndexPath.row]
+                currentlySelectedTopic = GroupOfImageGalleries.topics[cellIndexPath.row]
+                currentlySelectedImageGallery = GroupOfImageGalleries.arrayOfImageGalleries[cellIndexPath.row]
                 performSegue(withIdentifier: "Show Gallery", sender: self)
             }
         }
@@ -166,8 +149,8 @@ class GalleryTopicsViewController: UITableViewController {
         let undeleteAction = UIContextualAction(style: .normal, title: "Undelete") {
             [weak self] (contextAction: UIContextualAction, sourceView: UIView, completionHandler: (Bool) -> Void) in
             self?.tableView.performBatchUpdates({
-                self?.topicsList.append(self!.recentlyDeletedList[indexPath.row])
-                self?.listOfImageGalleries.append(self!.recentlyRemovedImageGalleries[indexPath.row])
+                GroupOfImageGalleries.topics.append(self!.recentlyDeletedList[indexPath.row])
+                GroupOfImageGalleries.arrayOfImageGalleries.append(self!.recentlyRemovedImageGalleries[indexPath.row])
                 
                 self?.recentlyDeletedList.remove(at: indexPath.row)
                 self?.recentlyRemovedImageGalleries.remove(at: indexPath.row)

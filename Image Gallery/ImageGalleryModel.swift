@@ -24,16 +24,9 @@ struct ImageGalleryModel: Hashable {
     var topic: String
     var imageGalleryURLs = [URL(string: "https://images.pexels.com/photos/274131/pexels-photo-274131.jpeg?auto=compress&cs=tinysrgb&h=350"),URL(string: "https://newevolutiondesigns.com/images/freebies/cool-wallpaper-2.jpg"), URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReIoYqxU5APOY1fPGRuzLX7x47TsnyakYQXp6dLnNytz3k-2te")]
     var imageAspectRatios: [Double] = [1.0, 1.0, 1.0]
-        
+    
     init(topic: String, identifier: Int) {
         self.topic = topic
         self.hashValue = identifier
     }
-    
-//    init(topic: String, urls: [URL?], aspectRatios: [Double]) {
-//        self.topic = topic
-//        self.imageGalleryURLs = urls
-//        self.imageAspectRatios = aspectRatios
-//    }
-    
 }
