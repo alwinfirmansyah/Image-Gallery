@@ -10,6 +10,14 @@ import UIKit
 
 class GalleryTopicsViewController: UITableViewController, UISplitViewControllerDelegate {
     
+    // -------------------------------------------------------------------------------
+    // MARK: - ViewController LifeCycle and Layout
+    // -------------------------------------------------------------------------------
+    
+    override func viewDidLoad() {
+        self.title = "Topics"
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         splitViewController?.delegate = self
@@ -33,8 +41,10 @@ class GalleryTopicsViewController: UITableViewController, UISplitViewControllerD
     
     @IBAction func addTopic(_ sender: UIBarButtonItem) {
         let newTopic = "Untitled".madeUnique(withRespectTo: GroupOfImageGalleries.topics)
-        GroupOfImageGalleries.topics += [newTopic]
-        GroupOfImageGalleries.arrayOfImageGalleries += [ImageGalleryModel(topic: newTopic, identifier: GroupOfImageGalleries.topics.count)]
+        GroupOfImageGalleries.topics.insert(newTopic, at: 0)
+        GroupOfImageGalleries.arrayOfImageGalleries.insert(ImageGalleryModel(topic: newTopic, identifier: GroupOfImageGalleries.topics.count), at: 0)
+//        GroupOfImageGalleries.topics += [newTopic]
+//        GroupOfImageGalleries.arrayOfImageGalleries += [ImageGalleryModel(topic: newTopic, identifier: GroupOfImageGalleries.topics.count)]
         tableView.reloadData()
     }
     
@@ -111,9 +121,7 @@ class GalleryTopicsViewController: UITableViewController, UISplitViewControllerD
                     tableView.reloadData()
                 })
             }
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
     
     // -------------------------------------------------------------------------------
@@ -160,7 +168,7 @@ class GalleryTopicsViewController: UITableViewController, UISplitViewControllerD
     private func undeleteRow(forRowAtIndexPath indexPath: IndexPath) -> UIContextualAction {
         let indexPathOfLastRow = IndexPath(row: tableView.numberOfRows(inSection: 0), section: 0)
         
-        let undeleteAction = UIContextualAction(style: .normal, title: "Undelete") {
+        let undeleteAction = UIContextualAction(style: .normal, title: "Add") {
             [weak self] (contextAction: UIContextualAction, sourceView: UIView, completionHandler: (Bool) -> Void) in
             self?.tableView.performBatchUpdates({
                 GroupOfImageGalleries.topics.append(self!.recentlyDeletedList[indexPath.row])
@@ -187,9 +195,11 @@ class GalleryTopicsViewController: UITableViewController, UISplitViewControllerD
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
-            return "Image Galleries"
-        } else {
+            return "Available"
+        } else if section == 1, recentlyDeletedList.count > 0 {
             return "Recently Deleted"
+        } else {
+            return nil
         }
     }
     
