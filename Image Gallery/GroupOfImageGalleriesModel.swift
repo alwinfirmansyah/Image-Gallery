@@ -10,7 +10,7 @@ import Foundation
 
 struct GroupOfImageGalleriesModel {
     
-    var topics: [String] = ["Food", "Sports", "People"]
-    lazy var arrayOfImageGalleries: [ImageGalleryModel] = [ImageGalleryModel(topic: topics[0]), ImageGalleryModel(topic: topics[1]), ImageGalleryModel(topic: topics[2])]
+//    var topics: [String] = ["Food", "Sports", "People"]
+//    lazy var arrayOfImageGalleries: [ImageGalleryModel] = [ImageGalleryModel(topic: topics[0]), ImageGalleryModel(topic: topics[1]), ImageGalleryModel(topic: topics[2])]
     
 }

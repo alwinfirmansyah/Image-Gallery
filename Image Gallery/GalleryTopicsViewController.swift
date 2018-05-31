@@ -14,11 +14,11 @@ class GalleryTopicsViewController: UITableViewController {
     // MARK: - Tableview Model
     // -------------------------------------------------------------------------------
     
-    var imageGalleries = GroupOfImageGalleriesModel()
-    lazy var topicsList = imageGalleries.topics
-    lazy var listOfImageGalleries = imageGalleries.arrayOfImageGalleries
+//    var imageGalleries = GroupOfImageGalleriesModel()
+//    lazy var topicsList = imageGalleries.topics
+//    lazy var listOfImageGalleries = imageGalleries.arrayOfImageGalleries
     
-//    lazy var listOfImageGalleries: [ImageGalleryModel] = [ImageGalleryModel(topic: topicsList[0]), ImageGalleryModel(topic: topicsList[1]), ImageGalleryModel(topic: topicsList[2])]
+    lazy var listOfImageGalleries: [ImageGalleryModel] = [ImageGalleryModel(topic: topicsList[0], identifier: 1), ImageGalleryModel(topic: topicsList[1], identifier: 2), ImageGalleryModel(topic: topicsList[2], identifier: 3)]
     
     // -------------------------------------------------------------------------------
     // MARK: - Tableview Data Related
@@ -26,14 +26,14 @@ class GalleryTopicsViewController: UITableViewController {
     
     
     
-//    private var topicsList: [String] = ["Food", "Sports", "People"]
+    private var topicsList: [String] = ["Food", "Sports", "People"]
     private var recentlyDeletedList = [String]()
     private var recentlyRemovedImageGalleries = [ImageGalleryModel]()
     
     @IBAction func addTopic(_ sender: UIBarButtonItem) {
         let newTopic = "Untitled".madeUnique(withRespectTo: topicsList)
         topicsList += [newTopic]
-        listOfImageGalleries += [ImageGalleryModel(topic: newTopic)]
+        listOfImageGalleries += [ImageGalleryModel(topic: newTopic, identifier: topicsList.count)]
         tableView.reloadData()
     }
     
@@ -141,6 +141,7 @@ class GalleryTopicsViewController: UITableViewController {
         if let tappedCell = recognizer.view as? UITableViewCell {
             if let cellIndexPath = tableView.indexPath(for: tappedCell), cellIndexPath.section == 0 {
                 currentlySelectedTopic = topicsList[cellIndexPath.row]
+                currentlySelectedImageGallery = listOfImageGalleries[cellIndexPath.row]
                 performSegue(withIdentifier: "Show Gallery", sender: self)
             }
         }
@@ -203,18 +204,15 @@ class GalleryTopicsViewController: UITableViewController {
         }
     }
     
-    private var currentlySelectedTopic: String = ""
+    private var currentlySelectedTopic: String?
+    private var currentlySelectedImageGallery: ImageGalleryModel?
+//    private var arrayOfSavedImageGalleries = [ImageGalleryModel]()
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Show Gallery" {
             if let destination = segue.destination as? ImageGalleryViewController {
                 destination.navigationItem.title = currentlySelectedTopic
-                
-                if let index = topicsList.index(of: currentlySelectedTopic) {
-//                    listOfImageGalleries[index] = destination.imageGallery!
-                    
-                    destination.imageGallery = listOfImageGalleries[index]
-                }
+                destination.imageGallery = currentlySelectedImageGallery
             }
         }
     }

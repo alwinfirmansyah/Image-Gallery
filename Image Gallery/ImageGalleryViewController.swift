@@ -27,6 +27,11 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
     // if someone sets this, we'll update our UI
     // if someone asks for this, we'll cons up a Model from the UI
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+    }
+    
     var imageGallery: ImageGalleryModel? {
         didSet {
             if let urls = imageGallery?.imageGalleryURLs, let aspectRatios = imageGallery?.imageAspectRatios.map ({ CGFloat($0) }) {
@@ -187,6 +192,10 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
     }
 
 }
+
+// -------------------------------------------------------------------------------
+// MARK: - Extensions and Constants
+// -------------------------------------------------------------------------------
 
 extension ImageGalleryViewController {
     private var cellWidth: CGFloat {
