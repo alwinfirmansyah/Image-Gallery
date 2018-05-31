@@ -14,17 +14,28 @@ class GalleryTopicsViewController: UITableViewController {
     // MARK: - Tableview Model
     // -------------------------------------------------------------------------------
     
-    var topicsList: [String] = ["Food", "Sports", "People"]
-    private var recentlyDeletedList = [String]()
+    var imageGalleries = GroupOfImageGalleriesModel()
+    lazy var topicsList = imageGalleries.topics
+    lazy var listOfImageGalleries = imageGalleries.arrayOfImageGalleries
     
-    @IBAction func addTopic(_ sender: UIBarButtonItem) {
-        topicsList += ["Untitled".madeUnique(withRespectTo: topicsList)]
-        tableView.reloadData()
-    }
+//    lazy var listOfImageGalleries: [ImageGalleryModel] = [ImageGalleryModel(topic: topicsList[0]), ImageGalleryModel(topic: topicsList[1]), ImageGalleryModel(topic: topicsList[2])]
     
     // -------------------------------------------------------------------------------
     // MARK: - Tableview Data Related
     // -------------------------------------------------------------------------------
+    
+    
+    
+//    private var topicsList: [String] = ["Food", "Sports", "People"]
+    private var recentlyDeletedList = [String]()
+    private var recentlyRemovedImageGalleries = [ImageGalleryModel]()
+    
+    @IBAction func addTopic(_ sender: UIBarButtonItem) {
+        let newTopic = "Untitled".madeUnique(withRespectTo: topicsList)
+        topicsList += [newTopic]
+        listOfImageGalleries += [ImageGalleryModel(topic: newTopic)]
+        tableView.reloadData()
+    }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
@@ -82,16 +93,19 @@ class GalleryTopicsViewController: UITableViewController {
             if indexPath.section == 0 {
                 tableView.performBatchUpdates({
                     recentlyDeletedList.append(topicsList[indexPath.row])
+                    recentlyRemovedImageGalleries.append(listOfImageGalleries[indexPath.row])
+                    
                     topicsList.remove(at: indexPath.row)
+                    listOfImageGalleries.remove(at: indexPath.row)
                     
                     tableView.deleteRows(at: [indexPath], with: .fade)
                     tableView.insertRows(at: [indexPathOfLastRow], with: .fade)
                 })
             } else {
                 tableView.performBatchUpdates({
-                    let removedTopic = recentlyDeletedList[indexPath.row]
-                    imageGalleries[removedTopic] = nil
                     recentlyDeletedList.remove(at: indexPath.row)
+                    recentlyRemovedImageGalleries.remove(at: indexPath.row)
+                    
                     tableView.deleteRows(at: [indexPath], with: .fade)
                     tableView.reloadData()
                 })
@@ -114,7 +128,7 @@ class GalleryTopicsViewController: UITableViewController {
                 tappedCell.resignationHandler = { [weak self, unowned tappedCell] in
                     if let text = tappedCell.textField.text {
                         self?.topicsList[cellIndexPath.row] = text
-//                        self?.tableView.reloadRows(at: [cellIndexPath], with: .none)
+                        self?.listOfImageGalleries[cellIndexPath.row].topic = text
                         self?.tableView.reloadData()
                     }
                 }
@@ -127,13 +141,7 @@ class GalleryTopicsViewController: UITableViewController {
         if let tappedCell = recognizer.view as? UITableViewCell {
             if let cellIndexPath = tableView.indexPath(for: tappedCell), cellIndexPath.section == 0 {
                 currentlySelectedTopic = topicsList[cellIndexPath.row]
-                
-                if let imageGalleryVC = imageGalleries[currentlySelectedTopic!] {
-                    imageGalleryVC.navigationItem.title = currentlySelectedTopic
-                    splitViewController?.showDetailViewController(imageGalleryVC, sender: self)
-                } else {
-                    performSegue(withIdentifier: "Show Gallery", sender: self)
-                }
+                performSegue(withIdentifier: "Show Gallery", sender: self)
             }
         }
     }
@@ -155,7 +163,11 @@ class GalleryTopicsViewController: UITableViewController {
             [weak self] (contextAction: UIContextualAction, sourceView: UIView, completionHandler: (Bool) -> Void) in
             self?.tableView.performBatchUpdates({
                 self?.topicsList.append(self!.recentlyDeletedList[indexPath.row])
+                self?.listOfImageGalleries.append(self!.recentlyRemovedImageGalleries[indexPath.row])
+                
                 self?.recentlyDeletedList.remove(at: indexPath.row)
+                self?.recentlyRemovedImageGalleries.remove(at: indexPath.row)
+                
                 self?.tableView.deleteRows(at: [indexPath], with: .fade)
                 self?.tableView.insertRows(at: [indexPathOfLastRow], with: .fade)
             })
@@ -191,14 +203,18 @@ class GalleryTopicsViewController: UITableViewController {
         }
     }
     
-    private var imageGalleries = [String : ImageGalleryViewController]()
-    private var currentlySelectedTopic: String?
+    private var currentlySelectedTopic: String = ""
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Show Gallery" {
             if let destination = segue.destination as? ImageGalleryViewController {
                 destination.navigationItem.title = currentlySelectedTopic
-                imageGalleries[currentlySelectedTopic!] = destination
+                
+                if let index = topicsList.index(of: currentlySelectedTopic) {
+//                    listOfImageGalleries[index] = destination.imageGallery!
+                    
+                    destination.imageGallery = listOfImageGalleries[index]
+                }
             }
         }
     }
