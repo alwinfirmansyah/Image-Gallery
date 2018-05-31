@@ -30,11 +30,20 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
+        if imageGallery != nil {
+            if let index = GroupOfImageGalleries.arrayOfImageGalleries.index(of: imageGallery!) {
+                GroupOfImageGalleries.arrayOfImageGalleries[index] = imageGallery!
+                GroupOfImageGalleries.arrayOfImageGalleries[index].topic = topic
+                GroupOfImageGalleries.arrayOfImageGalleries[index].imageGalleryURLs = imageURLs
+                GroupOfImageGalleries.arrayOfImageGalleries[index].imageAspectRatios = imageAspectRatios.map({ Double($0) })
+            }
+        }
     }
     
     var imageGallery: ImageGalleryModel? {
         didSet {
-            if let urls = imageGallery?.imageGalleryURLs, let aspectRatios = imageGallery?.imageAspectRatios.map ({ CGFloat($0) }) {
+            if let urls = imageGallery?.imageGalleryURLs, let aspectRatios = imageGallery?.imageAspectRatios.map ({ CGFloat($0) }), let topicFromModel = imageGallery?.topic  {
+                topic = topicFromModel
                 imageURLs = urls
                 imageAspectRatios = aspectRatios
             }

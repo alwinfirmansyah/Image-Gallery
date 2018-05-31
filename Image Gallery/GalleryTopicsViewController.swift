@@ -10,23 +10,27 @@ import UIKit
 
 class GalleryTopicsViewController: UITableViewController {
     
+    override func viewDidAppear(_ animated: Bool) {
+        topicsList = GroupOfImageGalleries.topics
+        listOfImageGalleries = GroupOfImageGalleries.arrayOfImageGalleries
+//        tableView.reloadData()
+    }
+    
     // -------------------------------------------------------------------------------
     // MARK: - Tableview Model
     // -------------------------------------------------------------------------------
     
-//    var imageGalleries = GroupOfImageGalleriesModel()
-//    lazy var topicsList = imageGalleries.topics
-//    lazy var listOfImageGalleries = imageGalleries.arrayOfImageGalleries
+//    var imageGalleries = GroupOfImageGalleries()
+    var topicsList = GroupOfImageGalleries.topics
+    var listOfImageGalleries = GroupOfImageGalleries.arrayOfImageGalleries
     
-    lazy var listOfImageGalleries: [ImageGalleryModel] = [ImageGalleryModel(topic: topicsList[0], identifier: 1), ImageGalleryModel(topic: topicsList[1], identifier: 2), ImageGalleryModel(topic: topicsList[2], identifier: 3)]
+//    lazy var listOfImageGalleries: [ImageGalleryModel] = [ImageGalleryModel(topic: topicsList[0], identifier: 1), ImageGalleryModel(topic: topicsList[1], identifier: 2), ImageGalleryModel(topic: topicsList[2], identifier: 3)]
     
     // -------------------------------------------------------------------------------
     // MARK: - Tableview Data Related
     // -------------------------------------------------------------------------------
     
-    
-    
-    private var topicsList: [String] = ["Food", "Sports", "People"]
+//    private var topicsList: [String] = ["Food", "Sports", "People"]
     private var recentlyDeletedList = [String]()
     private var recentlyRemovedImageGalleries = [ImageGalleryModel]()
     
@@ -132,7 +136,6 @@ class GalleryTopicsViewController: UITableViewController {
                         self?.tableView.reloadData()
                     }
                 }
-                
             }
         }
     }
