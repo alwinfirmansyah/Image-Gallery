@@ -8,7 +8,21 @@
 
 import UIKit
 
-class GalleryTopicsViewController: UITableViewController {
+class GalleryTopicsViewController: UITableViewController, UISplitViewControllerDelegate {
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        splitViewController?.delegate = self
+    }
+    
+    func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
+        if let imageGalleryVC = secondaryViewController as? ImageGalleryViewController {
+            if imageGalleryVC.imageGallery == nil {
+                return true
+            }
+        }
+        return false
+    }
     
     // -------------------------------------------------------------------------------
     // MARK: - Tableview Data Related

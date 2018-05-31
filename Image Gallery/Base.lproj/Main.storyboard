@@ -65,7 +65,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6vI-pg-bXI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2361" y="-414"/>
+            <point key="canvasLocation" x="1956" y="-414"/>
         </scene>
         <!--Single Image View Controller-->
         <scene sceneID="Ied-cF-20w">
@@ -100,7 +100,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TeX-33-zET" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2361" y="778"/>
+            <point key="canvasLocation" x="1956" y="778"/>
         </scene>
         <!--Split View Controller-->
         <scene sceneID="wdA-nr-cQ7">
@@ -113,7 +113,7 @@
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kjF-8M-MOi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1015" y="41"/>
+            <point key="canvasLocation" x="-550" y="-414"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="b69-N3-onZ">
