@@ -33,18 +33,9 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
             galleryCollectionView.dropDelegate = self
         }
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        if imageGallery != nil {
-            if let index = GroupOfImageGalleries.arrayOfImageGalleries.index(of: imageGallery!) {
-                GroupOfImageGalleries.arrayOfImageGalleries[index] = imageGallery!
-                GroupOfImageGalleries.arrayOfImageGalleries[index].topic = topic
-                GroupOfImageGalleries.arrayOfImageGalleries[index].imageGalleryURLs = imageURLs
-                GroupOfImageGalleries.arrayOfImageGalleries[index].imageAspectRatios = imageAspectRatios.map({ Double($0) })
-            }
-        }
+        updateModel()
     }
     
     // -------------------------------------------------------------------------------
@@ -57,6 +48,17 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
                 topic = topicFromModel
                 imageURLs = urls
                 imageAspectRatios = aspectRatios
+            }
+        }
+    }
+    
+    private func updateModel() {
+        if imageGallery != nil {
+            if let index = GroupOfImageGalleries.arrayOfImageGalleries.index(of: imageGallery!) {
+                GroupOfImageGalleries.arrayOfImageGalleries[index] = imageGallery!
+                GroupOfImageGalleries.arrayOfImageGalleries[index].topic = topic
+                GroupOfImageGalleries.arrayOfImageGalleries[index].imageGalleryURLs = imageURLs
+                GroupOfImageGalleries.arrayOfImageGalleries[index].imageAspectRatios = imageAspectRatios.map({ Double($0) })
             }
         }
     }
