@@ -52,6 +52,11 @@
                     </tableView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="nee-pm-k5X">
+                        <barButtonItem key="leftBarButtonItem" systemItem="save" id="2kP-8w-UQf">
+                            <connections>
+                                <action selector="save:" destination="lWj-Fw-kde" id="Loe-eG-jAk"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="2Mu-ZP-Tig">
                             <connections>
                                 <action selector="addTopic:" destination="lWj-Fw-kde" id="1jh-3M-Fvg"/>

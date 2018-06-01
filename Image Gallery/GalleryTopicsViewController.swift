@@ -11,6 +11,21 @@ import UIKit
 class GalleryTopicsViewController: UITableViewController, UISplitViewControllerDelegate {
     
     // -------------------------------------------------------------------------------
+    // MARK: - Persistence
+    // -------------------------------------------------------------------------------
+    
+    @IBAction func save(_ sender: UIBarButtonItem) {
+        let imageGalleries = GroupOfImageGalleries()
+    
+        if let json = imageGalleries.json {
+            if let jsonString = String(data: json, encoding: .utf8) {
+                print(jsonString)
+                print("SUCCESSFUL PRINT OF JSON ---------------------------------------------------------")
+            }
+        }
+    }
+
+    // -------------------------------------------------------------------------------
     // MARK: - ViewController LifeCycle and Layout
     // -------------------------------------------------------------------------------
     
@@ -43,8 +58,7 @@ class GalleryTopicsViewController: UITableViewController, UISplitViewControllerD
         let newTopic = "Untitled".madeUnique(withRespectTo: GroupOfImageGalleries.topics)
         GroupOfImageGalleries.topics.insert(newTopic, at: 0)
         GroupOfImageGalleries.arrayOfImageGalleries.insert(ImageGalleryModel(topic: newTopic, identifier: GroupOfImageGalleries.topics.count), at: 0)
-//        GroupOfImageGalleries.topics += [newTopic]
-//        GroupOfImageGalleries.arrayOfImageGalleries += [ImageGalleryModel(topic: newTopic, identifier: GroupOfImageGalleries.topics.count)]
+
         tableView.reloadData()
     }
     
@@ -216,7 +230,6 @@ class GalleryTopicsViewController: UITableViewController, UISplitViewControllerD
     
     private var currentlySelectedTopic: String?
     private var currentlySelectedImageGallery: ImageGalleryModel?
-//    private var arrayOfSavedImageGalleries = [ImageGalleryModel]()
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Show Gallery" {

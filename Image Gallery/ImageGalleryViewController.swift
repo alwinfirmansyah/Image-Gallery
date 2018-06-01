@@ -10,6 +10,21 @@ import UIKit
 
 class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UICollectionViewDragDelegate, UICollectionViewDropDelegate {
 
+    // -------------------------------------------------------------------------------
+    // MARK: - Testing Purposes Only, Need to Delete This Section
+    // -------------------------------------------------------------------------------
+    
+    
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        imageURLs = [URL(string: "https://images.pexels.com/photos/274131/pexels-photo-274131.jpeg?auto=compress&cs=tinysrgb&h=350")!,URL(string: "https://newevolutiondesigns.com/images/freebies/cool-wallpaper-2.jpg")!, URL(string: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReIoYqxU5APOY1fPGRuzLX7x47TsnyakYQXp6dLnNytz3k-2te")!]
+//        imageAspectRatios = [1.0, 1.0, 1.0]
+//    }
+    
+    // -------------------------------------------------------------------------------
+    // MARK: - ViewController Settings and Lifecycle
+    // -------------------------------------------------------------------------------
+    
     @IBOutlet weak var galleryCollectionView: UICollectionView! {
         didSet {
             galleryCollectionView.dataSource = self
@@ -18,15 +33,7 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
             galleryCollectionView.dropDelegate = self
         }
     }
-    
-    // -------------------------------------------------------------------------------
-    // MARK: - Collection View Model
-    // -------------------------------------------------------------------------------
 
-    // computed property for our Model
-    // if someone sets this, we'll update our UI
-    // if someone asks for this, we'll cons up a Model from the UI
-    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
@@ -40,6 +47,10 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
         }
     }
     
+    // -------------------------------------------------------------------------------
+    // MARK: - Collection View Model
+    // -------------------------------------------------------------------------------
+    
     var imageGallery: ImageGalleryModel? {
         didSet {
             if let urls = imageGallery?.imageGalleryURLs, let aspectRatios = imageGallery?.imageAspectRatios.map ({ CGFloat($0) }), let topicFromModel = imageGallery?.topic  {
@@ -50,26 +61,12 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
         }
     }
     
-//    var imageGallery: ImageGalleryModel? {
-//        get {
-//            let urls = imageURLs
-//            let aspectRatios = imageAspectRatios.map({ Double($0) })
-//            return ImageGalleryModel(topic: topic, urls: urls, aspectRatios: aspectRatios)
-//        }
-//        set {
-//            if let urls = imageGallery?.imageGalleryURLs, let aspectRatios = imageGallery?.imageAspectRatios.map ({ CGFloat($0) }) {
-//                imageURLs = urls
-//                imageAspectRatios = aspectRatios
-//            }
-//        }
-//    }
-    
     // -------------------------------------------------------------------------------
     // MARK: - Collection View Data Source
     // -------------------------------------------------------------------------------
 
     var topic = ""
-    private var imageURLs = [URL?]()
+    private var imageURLs = [URL]()
     private var imageAspectRatios = [CGFloat]()
     
     private let imageCell = "imageCell"
@@ -80,7 +77,8 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imageCell, for: indexPath)
-        if let imageCell = cell as? ImageCollectionViewCell, let url = imageURLs[indexPath.item]?.imageURL {
+        if let imageCell = cell as? ImageCollectionViewCell {
+            let url = imageURLs[indexPath.item].imageURL
             imageCell.galleryImageURL = url
         }
         return cell

@@ -74,8 +74,8 @@
 				1CF70D0B20B8E35A00CCFF82 /* TextFieldTableViewCell.swift */,
 				1C2C14E920B5EE3F009A859D /* ImageGalleryViewController.swift */,
 				1C2ADE0720B4B1C200E297B5 /* ImageCollectionViewCell.swift */,
-				1C37B40D20B37D4600D0B80C /* Main.storyboard */,
 				1CF70D0920B8C7A000CCFF82 /* SingleImageViewController.swift */,
+				1C37B40D20B37D4600D0B80C /* Main.storyboard */,
 				1C37B41B20B37D6200D0B80C /* Supporting Files */,
 				1C37B41520B37D4A00D0B80C /* Info.plist */,
 			);
