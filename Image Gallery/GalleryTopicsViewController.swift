@@ -11,12 +11,8 @@ import UIKit
 class GalleryTopicsViewController: UITableViewController, UISplitViewControllerDelegate {
     
     // -------------------------------------------------------------------------------
-    // MARK: - Persistence
+    // MARK: - Model
     // -------------------------------------------------------------------------------
-
-    override func viewWillAppear(_ animated: Bool) {
-        imageGalleries = GroupOfImageGalleries()
-    }
     
     var imageGalleries = GroupOfImageGalleries() {
         didSet {
@@ -25,6 +21,14 @@ class GalleryTopicsViewController: UITableViewController, UISplitViewControllerD
             GroupOfImageGalleries.topics = imageGalleries.listOfTopics
             GroupOfImageGalleries.recentlyDeletedTopics = imageGalleries.listOfRecentlyDeletedTopics
         }
+    }
+    
+    // -------------------------------------------------------------------------------
+    // MARK: - Persistence Related
+    // -------------------------------------------------------------------------------
+
+    override func viewWillAppear(_ animated: Bool) {
+        imageGalleries = GroupOfImageGalleries()
     }
     
     @IBAction func save(_ sender: UIBarButtonItem) {
@@ -44,14 +48,8 @@ class GalleryTopicsViewController: UITableViewController, UISplitViewControllerD
             }
         }
     }
-
-    // -------------------------------------------------------------------------------
-    // MARK: - ViewController LifeCycle and Layout
-    // -------------------------------------------------------------------------------
     
     override func viewDidLoad() {
-        self.title = "Topics"
-        
         if let url = try? FileManager.default.url(
             for: .documentDirectory,
             in: .userDomainMask,
@@ -62,11 +60,15 @@ class GalleryTopicsViewController: UITableViewController, UISplitViewControllerD
                 imageGalleries = GroupOfImageGalleries(json: jsonData)!
             }
         }
-        
     }
+
+    // -------------------------------------------------------------------------------
+    // MARK: - ViewController LifeCycle and Layout
+    // -------------------------------------------------------------------------------
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.title = "Topics"
         splitViewController?.delegate = self
     }
     
