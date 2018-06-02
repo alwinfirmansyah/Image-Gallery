@@ -34,16 +34,17 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
         }
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        updateModel()
-    }
-    
     // -------------------------------------------------------------------------------
     // MARK: - Collection View Model
     // -------------------------------------------------------------------------------
     
     var imageGallery: ImageGalleryModel? {
         didSet {
+            if let index = GroupOfImageGalleries.arrayOfImageGalleries.index(of: imageGallery!) {
+                GroupOfImageGalleries.arrayOfImageGalleries[index] = imageGallery!
+                uniqueImageGalleryIdentifier = index
+            }
+            
             if let urls = imageGallery?.imageGalleryURLs, let aspectRatios = imageGallery?.imageAspectRatios.map ({ CGFloat($0) }), let topicFromModel = imageGallery?.topic  {
                 topic = topicFromModel
                 imageURLs = urls
@@ -52,24 +53,35 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
         }
     }
     
-    private func updateModel() {
-        if imageGallery != nil {
-            if let index = GroupOfImageGalleries.arrayOfImageGalleries.index(of: imageGallery!) {
-                GroupOfImageGalleries.arrayOfImageGalleries[index] = imageGallery!
-                GroupOfImageGalleries.arrayOfImageGalleries[index].topic = topic
-                GroupOfImageGalleries.arrayOfImageGalleries[index].imageGalleryURLs = imageURLs
-                GroupOfImageGalleries.arrayOfImageGalleries[index].imageAspectRatios = imageAspectRatios.map({ Double($0) })
-            }
-        }
-    }
-    
     // -------------------------------------------------------------------------------
     // MARK: - Collection View Data Source
     // -------------------------------------------------------------------------------
 
-    var topic = ""
-    private var imageURLs = [URL]()
-    private var imageAspectRatios = [CGFloat]()
+    private var uniqueImageGalleryIdentifier: Int?
+    
+    private var topic = "" {
+        didSet {
+            if let index = uniqueImageGalleryIdentifier {
+                GroupOfImageGalleries.arrayOfImageGalleries[index].topic = topic
+            }
+        }
+    }
+    
+    private var imageURLs = [URL]() {
+        didSet {
+            if let index = uniqueImageGalleryIdentifier {
+                GroupOfImageGalleries.arrayOfImageGalleries[index].imageGalleryURLs = imageURLs
+            }
+        }
+    }
+    
+    private var imageAspectRatios = [CGFloat]() {
+        didSet {
+            if let index = uniqueImageGalleryIdentifier {
+                GroupOfImageGalleries.arrayOfImageGalleries[index].imageAspectRatios = imageAspectRatios.map({ Double($0) })
+            }
+        }
+    }
     
     private let imageCell = "imageCell"
     
@@ -179,7 +191,6 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
                 }
             }
         }
-    
 
     // -------------------------------------------------------------------------------
     // MARK: - Navigation
@@ -199,7 +210,6 @@ class ImageGalleryViewController: UIViewController, UICollectionViewDataSource, 
             }
         }
     }
-
 }
 
 // -------------------------------------------------------------------------------

@@ -27,7 +27,6 @@ class ImageCollectionViewCell: UICollectionViewCell {
         }
         set {
             imageView.image = newValue
-//            imageView.sizeToFit()
             collectionViewCellLoadingSpinner?.stopAnimating()
         }
     }

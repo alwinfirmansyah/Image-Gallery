@@ -13,15 +13,44 @@ class GalleryTopicsViewController: UITableViewController, UISplitViewControllerD
     // -------------------------------------------------------------------------------
     // MARK: - Persistence
     // -------------------------------------------------------------------------------
+
+    override func viewWillAppear(_ animated: Bool) {
+        imageGalleries = GroupOfImageGalleries()
+        
+        if let url = try? FileManager.default.url(
+            for: .documentDirectory,
+            in: .userDomainMask,
+            appropriateFor: nil,
+            create: true
+            ).appendingPathComponent("ImageGallery.json") {
+            if let jsonData = try? Data(contentsOf: url) {
+                imageGalleries = GroupOfImageGalleries(json: jsonData)!
+            }
+        }
+    }
+    
+    var imageGalleries = GroupOfImageGalleries()
     
     @IBAction func save(_ sender: UIBarButtonItem) {
-        let imageGalleries = GroupOfImageGalleries()
-    
         if let json = imageGalleries.json {
-            if let jsonString = String(data: json, encoding: .utf8) {
-                print(jsonString)
-                print("SUCCESSFUL PRINT OF JSON ---------------------------------------------------------")
+            if let url = try? FileManager.default.url(
+                for: .documentDirectory,
+                in: .userDomainMask,
+                appropriateFor: nil,
+                create: true
+            ).appendingPathComponent("ImageGallery.json") {
+                do {
+                    try json.write(to: url)
+                    print("saved successfully!")
+                } catch let error {
+                    print("couldn't save \(error)")
+                }
             }
+//            if let jsonString = String(data: json, encoding: .utf8) {
+//                print("\n START OF JSON ---------------------------------------------------------")
+//                print(jsonString)
+//                print("END OF JSON ---------------------------------------------------------" + "\n")
+//            }
         }
     }
 
@@ -51,13 +80,11 @@ class GalleryTopicsViewController: UITableViewController, UISplitViewControllerD
     // MARK: - Tableview Data Related
     // -------------------------------------------------------------------------------
     
-    private var recentlyDeletedList = [String]()
-    private var recentlyRemovedImageGalleries = [ImageGalleryModel]()
-    
     @IBAction func addTopic(_ sender: UIBarButtonItem) {
         let newTopic = "Untitled".madeUnique(withRespectTo: GroupOfImageGalleries.topics)
         GroupOfImageGalleries.topics.insert(newTopic, at: 0)
         GroupOfImageGalleries.arrayOfImageGalleries.insert(ImageGalleryModel(topic: newTopic, identifier: GroupOfImageGalleries.topics.count), at: 0)
+        imageGalleries = GroupOfImageGalleries()
 
         tableView.reloadData()
     }
@@ -68,9 +95,9 @@ class GalleryTopicsViewController: UITableViewController, UISplitViewControllerD
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return GroupOfImageGalleries.topics.count
+            return GroupOfImageGalleries.arrayOfImageGalleries.count
         } else {
-            return recentlyDeletedList.count
+            return GroupOfImageGalleries.arrayOfRecentlyDeletedImageGalleries.count
         }
     }
     
@@ -99,7 +126,7 @@ class GalleryTopicsViewController: UITableViewController, UISplitViewControllerD
                 
                 return inputCell
             } else {
-                let text = NSAttributedString(string: recentlyDeletedList[indexPath.row], attributes: [.font : font])
+                let text = NSAttributedString(string: GroupOfImageGalleries.recentlyDeletedTopics[indexPath.row], attributes: [.font : font])
                 inputCell.textField.attributedText = text
                 return inputCell
             }
@@ -108,8 +135,6 @@ class GalleryTopicsViewController: UITableViewController, UISplitViewControllerD
         }
     }
     
-    
-    
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         let indexPathOfLastRow = IndexPath(row: tableView.numberOfRows(inSection: 1), section: 1)
 
@@ -117,19 +142,21 @@ class GalleryTopicsViewController: UITableViewController, UISplitViewControllerD
             // Delete the row from the data source
             if indexPath.section == 0 {
                 tableView.performBatchUpdates({
-                    recentlyDeletedList.append(GroupOfImageGalleries.topics[indexPath.row])
-                    recentlyRemovedImageGalleries.append(GroupOfImageGalleries.arrayOfImageGalleries[indexPath.row])
+                    GroupOfImageGalleries.recentlyDeletedTopics.append(GroupOfImageGalleries.topics[indexPath.row])
+                    GroupOfImageGalleries.arrayOfRecentlyDeletedImageGalleries.append(GroupOfImageGalleries.arrayOfImageGalleries[indexPath.row])
                     
                     GroupOfImageGalleries.topics.remove(at: indexPath.row)
                     GroupOfImageGalleries.arrayOfImageGalleries.remove(at: indexPath.row)
+                    imageGalleries = GroupOfImageGalleries()
                     
                     tableView.deleteRows(at: [indexPath], with: .fade)
                     tableView.insertRows(at: [indexPathOfLastRow], with: .fade)
                 })
             } else {
                 tableView.performBatchUpdates({
-                    recentlyDeletedList.remove(at: indexPath.row)
-                    recentlyRemovedImageGalleries.remove(at: indexPath.row)
+                    GroupOfImageGalleries.recentlyDeletedTopics.remove(at: indexPath.row)
+                    GroupOfImageGalleries.arrayOfRecentlyDeletedImageGalleries.remove(at: indexPath.row)
+                    imageGalleries = GroupOfImageGalleries()
                     
                     tableView.deleteRows(at: [indexPath], with: .fade)
                     tableView.reloadData()
@@ -152,6 +179,7 @@ class GalleryTopicsViewController: UITableViewController, UISplitViewControllerD
                     if let text = tappedCell.textField.text {
                         GroupOfImageGalleries.topics[cellIndexPath.row] = text
                         GroupOfImageGalleries.arrayOfImageGalleries[cellIndexPath.row].topic = text
+                        self?.imageGalleries = GroupOfImageGalleries()
                         self?.tableView.reloadData()
                     }
                 }
@@ -185,11 +213,13 @@ class GalleryTopicsViewController: UITableViewController, UISplitViewControllerD
         let undeleteAction = UIContextualAction(style: .normal, title: "Add") {
             [weak self] (contextAction: UIContextualAction, sourceView: UIView, completionHandler: (Bool) -> Void) in
             self?.tableView.performBatchUpdates({
-                GroupOfImageGalleries.topics.append(self!.recentlyDeletedList[indexPath.row])
-                GroupOfImageGalleries.arrayOfImageGalleries.append(self!.recentlyRemovedImageGalleries[indexPath.row])
+                GroupOfImageGalleries.topics.append(GroupOfImageGalleries.recentlyDeletedTopics[indexPath.row])
+                GroupOfImageGalleries.arrayOfImageGalleries.append(GroupOfImageGalleries.arrayOfRecentlyDeletedImageGalleries[indexPath.row])
                 
-                self?.recentlyDeletedList.remove(at: indexPath.row)
-                self?.recentlyRemovedImageGalleries.remove(at: indexPath.row)
+                GroupOfImageGalleries.recentlyDeletedTopics.remove(at: indexPath.row)
+                GroupOfImageGalleries.arrayOfRecentlyDeletedImageGalleries.remove(at: indexPath.row)
+
+                self?.imageGalleries = GroupOfImageGalleries()
                 
                 self?.tableView.deleteRows(at: [indexPath], with: .fade)
                 self?.tableView.insertRows(at: [indexPathOfLastRow], with: .fade)
@@ -210,7 +240,7 @@ class GalleryTopicsViewController: UITableViewController, UISplitViewControllerD
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
             return "Available"
-        } else if section == 1, recentlyDeletedList.count > 0 {
+        } else if section == 1, GroupOfImageGalleries.recentlyDeletedTopics.count > 0 {
             return "Recently Deleted"
         } else {
             return nil
